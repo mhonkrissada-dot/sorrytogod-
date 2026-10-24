@@ -303,7 +303,7 @@ html.qlock #qlock{display:flex}
   try { localStorage.removeItem(KEY); ok = sessionStorage.getItem(KEY) === '1'; } catch(e){}
   if (ok) return;
   var th=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-  var n=new Date(), r=new Date(n.getFullYear(), n.getMonth()+(n.getDate()>=25?1:0), 25);
+  var n=new Date(), r=new Date(n.getFullYear(), n.getMonth()+1, 25);
   document.getElementById('qlock-d').textContent='25 '+th[r.getMonth()]+' '+(r.getFullYear()+543);
   var root = document.documentElement;
   root.classList.add('qlock');
