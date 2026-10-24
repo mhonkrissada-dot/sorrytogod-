@@ -298,11 +298,13 @@ html.qlock #qlock{display:flex}
 </div>
 <script>
 (function(){
-  var UNTIL = new Date('2026-11-25T00:00:00+07:00').getTime();
   var KEY = 'sc_pref_v2';
   var ok = false;
   try { localStorage.removeItem(KEY); ok = sessionStorage.getItem(KEY) === '1'; } catch(e){}
-  if (ok || Date.now() >= UNTIL) return;
+  if (ok) return;
+  var th=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  var n=new Date(), r=new Date(n.getFullYear(), n.getMonth()+(n.getDate()>=25?1:0), 25);
+  document.getElementById('qlock-d').textContent='25 '+th[r.getMonth()]+' '+(r.getFullYear()+543);
   var root = document.documentElement;
   root.classList.add('qlock');
   var seq = ['h','h','d','d','d'], i = 0, st = 0;
