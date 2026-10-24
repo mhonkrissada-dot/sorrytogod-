@@ -301,7 +301,7 @@ html.qlock #qlock{display:flex}
   var UNTIL = new Date('2026-11-25T00:00:00+07:00').getTime();
   var KEY = 'sc_pref_v2';
   var ok = false;
-  try { ok = localStorage.getItem(KEY) === '1'; } catch(e){}
+  try { localStorage.removeItem(KEY); ok = sessionStorage.getItem(KEY) === '1'; } catch(e){}
   if (ok || Date.now() >= UNTIL) return;
   var root = document.documentElement;
   root.classList.add('qlock');
@@ -312,7 +312,7 @@ html.qlock #qlock{display:flex}
     if (k === seq[i]) { if (i === 0) st = now; i++; }
     else { i = (k === 'h') ? 1 : 0; st = now; }
     if (i === seq.length) {
-      try { localStorage.setItem(KEY, '1'); } catch(e){}
+      try { sessionStorage.setItem(KEY, '1'); } catch(e){}
       root.classList.remove('qlock');
     }
   }
