@@ -440,38 +440,6 @@
 
   header.topbar{ padding:0 !important; display:block !important; }
 
-
-  /* --- case text: label on top, value below --- */
-  .case-text{ white-space:normal !important; }
-  .case-text .ln{ padding:0 0 10px; }
-  .case-text .ln:last-child{ padding-bottom:0; }
-  .case-text .lh{ display:flex; align-items:center; gap:0; font-size:12.5px; font-weight:600; color:var(--text-2); line-height:1.5; letter-spacing:.1px; }
-  .case-text .lh .ti{ width:16px !important; height:16px !important; margin-right:8px !important; vertical-align:0 !important; flex:none; color:var(--text-3); }
-  .case-text .lv{ padding-left:24px; white-space:pre-wrap; line-height:1.7; color:var(--text-1); }
-  .case-text .lv.solo{ padding-left:0; }
-  .case-text .lv.solo .ti{ width:16px !important; height:16px !important; margin-right:8px !important; color:var(--text-3); }
-  .col-close .case-text .lh{ color:var(--text-2); }
-  .case-text.clamp{ display:block !important; -webkit-line-clamp:unset !important; line-clamp:none !important; max-height:12.2em; overflow:hidden; }
-  .case-text.clamp.fade{ -webkit-mask-image:linear-gradient(180deg,#000 75%,transparent); mask-image:linear-gradient(180deg,#000 75%,transparent); }
-  .case-card.expanded .case-text.clamp{ max-height:none; -webkit-mask-image:none; mask-image:none; }
-
-  /* --- severity buttons in their own colours --- */
-  .seg-btn.sevb-r.active{ background:var(--sev-r-bg); color:var(--sev-r-fg); box-shadow:inset 0 0 0 1px var(--sev-r-bd); }
-  .seg-btn.sevb-y.active{ background:var(--sev-y-bg); color:var(--sev-y-fg); box-shadow:inset 0 0 0 1px var(--sev-y-bd); }
-  .seg-btn.sevb-g.active{ background:var(--sev-g-bg); color:var(--sev-g-fg); box-shadow:inset 0 0 0 1px var(--sev-g-bd); }
-  .seg-btn.sevb-r:not(.active):hover{ color:var(--sev-r-fg); }
-  .seg-btn.sevb-y:not(.active):hover{ color:var(--sev-y-fg); }
-  .seg-btn.sevb-g:not(.active):hover{ color:var(--sev-g-fg); }
-  .seg-btn .sev-dot{ width:9px; height:9px; box-shadow:0 0 0 2px var(--surface); }
-
-  /* --- new recommended picks --- */
-  .reshuffle{ display:inline-flex; align-items:center; gap:6px; height:36px; padding:0 13px; border-radius:9px; border:1px solid var(--border); background:var(--surface); color:var(--accent-strong); font:inherit; font-size:12.5px; font-weight:600; cursor:pointer; white-space:nowrap; transition:background .15s, border-color .15s; }
-  .reshuffle:hover{ background:var(--accent-soft); border-color:var(--accent); }
-  .reshuffle[hidden]{ display:none; }
-  .reshuffle svg{ width:14px; height:14px; }
-  .reshuffle.spin svg{ animation:rsSpin .5s ease; }
-  @keyframes rsSpin{ from{ transform:rotate(0) } to{ transform:rotate(360deg) } }
-  @media (max-width:640px){ .reshuffle{ height:40px; } }
 </style>
 </head>
 <body>
@@ -593,7 +561,7 @@ html.qlock #qlock{display:flex}
       themeGroup: "โหมดการแสดงผล", light: "สว่าง", dark: "มืด", auto: "ตามระบบ", langGroup: "ภาษา",
       status: "สถานะ", all: "ทั้งหมด", resolved: "เรียบร้อยแล้ว", pending: "รอดำเนินการ",
       sevGroup: "ระดับความรุนแรง", sevAll: "ทุกระดับ", r: "แดง", y: "เหลือง", g: "เขียว",
-      reshuffle: "แนะนำใหม่", reshuffleT: "สุ่มเคสแนะนำชุดใหม่", sort: "เรียง", sortAria: "เรียงลำดับ", rec: "แนะนำ", asc: "ลำดับในไฟล์", desc: "ย้อนลำดับ", views: "ดูมากที่สุด", searched: "ค้นเจอบ่อยที่สุด",
+      sort: "เรียง", sortAria: "เรียงลำดับ", rec: "แนะนำ", asc: "ลำดับในไฟล์", desc: "ย้อนลำดับ", views: "ดูมากที่สุด", searched: "ค้นเจอบ่อยที่สุด",
       cases: "เคส", subPopular: "หมวดรองยอดนิยม", subOf: (c) => `หมวดรองของ ${c}`, clearCat: "ล้างหมวด", filterOnly: (c) => `กดเพื่อกรองเฉพาะ ${c}`,
       backTop: "กลับขึ้นด้านบน", openMap: (n) => `เปิด ${n} ใน Google Maps`,
       info: "แจ้งเพื่อทราบ (ไม่มีผลการแก้ไข)", noFix: "ไม่มีบันทึกผลการแก้ไข",
@@ -610,7 +578,7 @@ html.qlock #qlock{display:flex}
       themeGroup: "Display mode", light: "Light", dark: "Dark", auto: "System", langGroup: "Language",
       status: "Status", all: "All", resolved: "Resolved", pending: "Pending",
       sevGroup: "Severity", sevAll: "All levels", r: "Red", y: "Yellow", g: "Green",
-      reshuffle: "New picks", reshuffleT: "Shuffle a new set of recommended cases", sort: "Sort", sortAria: "Sort by", rec: "Recommended", asc: "File order", desc: "Reverse order", views: "Most viewed", searched: "Most searched",
+      sort: "Sort", sortAria: "Sort by", rec: "Recommended", asc: "File order", desc: "Reverse order", views: "Most viewed", searched: "Most searched",
       cases: "cases", subPopular: "Popular sub-categories", subOf: (c) => `Sub-categories of ${c}`, clearCat: "Clear", filterOnly: (c) => `Show only ${c}`,
       backTop: "Back to top", openMap: (n) => `Open ${n} in Google Maps`,
       info: "For information only (no resolution)", noFix: "No resolution recorded",
@@ -652,16 +620,6 @@ html.qlock #qlock{display:flex}
   ];
   function compact(t){ return String(t).replace(/[ \t]+\n/g, "\n").replace(/\n\s*\n+/g, "\n").trim(); }
   function iconize(html){ return EMOJI_ICON.reduce((h,[re,svg]) => h.replace(re, svg), html); }
-  /* each "label : value" line becomes a block: icon + label on top, the value below it */
-  function fmtText(text, q){
-    return compact(text).split("\n").map(line => {
-      const m = line.match(/^(.{1,48}?)\s*[:：]\s*(.*)$/);
-      if(m && m[2] && !/^https?$/i.test(m[1].trim())){
-        return `<div class="ln"><div class="lh">${iconize(highlight(m[1].trim(), q))}</div><div class="lv">${highlight(m[2], q)}</div></div>`;
-      }
-      return `<div class="ln"><div class="lv solo">${iconize(highlight(line, q))}</div></div>`;
-    }).join("");
-  }
 
   /* ---------------- Data ---------------- */
   async function loadCases(){
@@ -704,8 +662,8 @@ html.qlock #qlock{display:flex}
   /* ---------------- Recommended order: complete cases first, reshuffled daily ---------------- */
   function seeded(seed){ return function(){ seed |= 0; seed = seed + 0x6D2B79F5 | 0; let t = Math.imul(seed ^ seed >>> 15, 1 | seed); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
   let REC_RANK = null;
-  function buildRecRank(seed){
-    const d = new Date(); const rnd = seeded(seed || (d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate()));
+  function buildRecRank(){
+    const d = new Date(); const rnd = seeded(d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate());
     const good = [], rest = [];
     CASES.forEach(c => ((c.closing.trim() && c.cat !== "แจ้งข่าว" && c.opening.length > 60) ? good : rest).push(c.no));
     for(let i = good.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [good[i], good[j]] = [good[j], good[i]]; }
@@ -775,13 +733,12 @@ html.qlock #qlock{display:flex}
           ${[["all",L.all],["resolved",L.resolved],["pending",L.pending]].map(([v,t]) => `<button type="button" class="seg-btn ${state.status===v?'active':''}" data-status="${v}">${t}</button>`).join("")}
         </div>
         <div class="seg" role="group" aria-label="${L.sevGroup}">
-          ${[["all",L.sevAll],["r",L.r],["y",L.y],["g",L.g]].map(([v,t]) => `<button type="button" class="seg-btn sevb-${v} ${state.sev===v?'active':''}" data-sev="${v}">${v!=="all"?`<span class="sev-dot ${v}"></span>`:''}${t}</button>`).join("")}
+          ${[["all",L.sevAll],["r",L.r],["y",L.y],["g",L.g]].map(([v,t]) => `<button type="button" class="seg-btn ${state.sev===v?'active':''}" data-sev="${v}">${v!=="all"?`<span class="sev-dot ${v}"></span>`:''}${t}</button>`).join("")}
         </div>
         <label class="sort-wrap"><span class="sort-label">${L.sort}</span>
           <select id="sortSel" class="sort-select" aria-label="${L.sortAria}">${SORTS.map(v => `<option value="${v}" ${state.sort===v?'selected':''}>${L[v]}</option>`).join("")}</select>
           <span class="sort-chev">${ICON.chevDown}</span>
         </label>
-        <button type="button" class="reshuffle" id="reshuffle" ${state.sort==='rec'?'':'hidden'} title="${L.reshuffleT}">${ICON.refresh}<span>${L.reshuffle}</span></button>
         <div class="results-count" id="resultsCount" aria-live="polite"></div>
       </div>
 
@@ -837,12 +794,12 @@ html.qlock #qlock{display:flex}
         <div class="case-columns">
           <div class="case-col col-open">
             <div class="col-head"><span class="col-label open-c">${L.detail}</span></div>
-            <div class="case-text clamp">${fmtText(c.opening, q)}</div>
+            <div class="case-text clamp">${iconize(highlight(compact(c.opening), q))}</div>
             <div class="col-copy-row"><button type="button" class="copy-btn" data-copy-kind="opening" data-copy-no="${c.no}">${ICON.copy}<span>Copy Opening</span></button></div>
           </div>
           <div class="case-col col-close">
             <div class="col-head"><span class="col-label close-c">${L.fix}</span></div>
-            <div class="case-text clamp ${c.closing ? '' : 'empty-text'}">${c.closing ? fmtText(c.closing, q) : emptyClose}</div>
+            <div class="case-text clamp ${c.closing ? '' : 'empty-text'}">${c.closing ? iconize(highlight(compact(c.closing), q)) : emptyClose}</div>
             <div class="col-copy-row">${c.closing ? `<button type="button" class="copy-btn" data-copy-kind="closing" data-copy-no="${c.no}">${ICON.copy}<span>Copy Resolution</span></button>` : ''}</div>
           </div>
         </div>
@@ -856,8 +813,7 @@ html.qlock #qlock{display:flex}
         card.setAttribute("data-measured", "1");
         const over = [...card.querySelectorAll(".case-text.clamp")].some(t => t.scrollHeight - t.clientHeight > parseFloat(getComputedStyle(t).lineHeight) * 2);
         const btn = card.querySelector(".more-btn");
-        if(over){ btn.hidden = false; card.querySelectorAll(".case-text.clamp").forEach(t => t.classList.toggle("fade", t.scrollHeight - t.clientHeight > 2)); }
-        else card.querySelectorAll(".case-text.clamp").forEach(t => t.classList.remove("clamp"));
+        if(over) btn.hidden = false; else card.querySelectorAll(".case-text.clamp").forEach(t => t.classList.remove("clamp"));
       });
     });
   }
@@ -980,16 +936,7 @@ html.qlock #qlock{display:flex}
       statT = setTimeout(() => { const q = state.query.trim(); if(q.length >= 2 && FILTERED.length) addSearchHits(FILTERED); }, 1200);
     });
     clear.addEventListener("click", () => { input.value = ""; state.query = ""; clear.style.display = "none"; refreshList(); input.focus(); });
-    document.getElementById("sortSel").addEventListener("change", e => { state.sort = e.target.value; document.getElementById("reshuffle").hidden = state.sort !== "rec"; refreshList(); });
-    /* sub-category row: the mouse wheel scrolls it sideways */
-    const sc = document.getElementById("subChips");
-    sc.addEventListener("wheel", e => {
-      if(sc.scrollWidth <= sc.clientWidth) return;
-      const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      const atStart = sc.scrollLeft <= 0 && d < 0, atEnd = sc.scrollLeft + sc.clientWidth >= sc.scrollWidth - 1 && d > 0;
-      if(atStart || atEnd) return;
-      e.preventDefault(); sc.scrollLeft += d;
-    }, { passive: false });
+    document.getElementById("sortSel").addEventListener("change", e => { state.sort = e.target.value; refreshList(); });
   }
   function setLang(l){
     if(l === LANG) return;
@@ -1013,7 +960,6 @@ html.qlock #qlock{display:flex}
       if(t.matches(".chip[data-sub]")){ const v = t.getAttribute("data-sub"); state.sub = state.sub === v ? null : v; renderSubChips(); return refreshList(); }
       if(t.id === "clearCat"){ state.category = null; state.sub = null; syncStatCards(); renderSubChips(); return refreshList(); }
       if(t.id === "resetAll"){ resetAll(); return; }
-      if(t.id === "reshuffle"){ buildRecRank((Math.random() * 1e9) | 0); refreshList(); window.scrollTo({ top: 0 }); t.classList.remove("spin"); void t.offsetWidth; t.classList.add("spin"); return; }
       if(t.matches(".copy-btn[data-copy-no]")) return handleCopy(t);
       if(t.matches(".more-btn")){
         const card = t.closest(".case-card"); const open = card.classList.toggle("expanded");
