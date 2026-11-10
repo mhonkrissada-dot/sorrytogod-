@@ -531,6 +531,11 @@
   .stat-value, .results-count b, .num{ letter-spacing:-.02em; }
   .case-no{ font-variant-numeric:tabular-nums; }
 
+  /* Even spacing and one icon size for every line in case text */
+  .case-text .ln.gap{ margin-top:0 !important; }
+  .case-text .ti, .case-text .lead .ti{ width:16px !important; height:16px !important; flex:none; }
+  .case-text .tx .ti{ vertical-align:-3px !important; margin:0 3px !important; }
+
 </style>
 </head>
 <body>
@@ -722,14 +727,22 @@ html.qlock #qlock{display:flex}
     [/(?:📣|📢)\uFE0F?/g, SVI('<path d="M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M16 8.5a5 5 0 0 1 0 7"/><path d="M19 6a8.5 8.5 0 0 1 0 12"/>')],
     [/(?:⛔|🚫)\uFE0F?/g, SVI('<circle cx="12" cy="12" r="9"/><line x1="7.5" y1="12" x2="16.5" y2="12"/>')]
   );
-  /* Render text as tidy lines: icon column + text, small gap where the original had a blank line */
+  /* Fixed icons for the three standard headings, whatever emoji the source text used */
+  const LABEL_ICON = [
+    [/^ลักษณะเหตุ/, SVI('<path d="M10.3 3.8 1.9 18a1.5 1.5 0 0 0 1.3 2.2h17.6a1.5 1.5 0 0 0 1.3-2.2L13.7 3.8a1.5 1.5 0 0 0-3.4 0z"/><line x1="12" y1="9.5" x2="12" y2="13.5"/><line x1="12" y1="17" x2="12.01" y2="17"/>')],
+    [/^ผลกระทบ/, SVI('<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 .3 1.5 1 2 2 2 0-3-1-5 1-8z"/>')],
+    [/^แนวทาง(?:ที่จะ)?(?:การ)?แก้ไข/, SVI('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6 2 2 6-6a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2z"/>')]
+  ];
+  /* Render text as tidy lines: icon column + text, even spacing between every line */
   function renderText(text, q){
     const lines = String(text).replace(/\r/g, "").split("\n");
     let out = "", gap = false;
     for(const raw of lines){
       const line = raw.replace(/\s+$/, "");
       if(!line.trim()){ gap = out !== ""; continue; }
-      const html = iconize(highlight(line.trim(), q));
+      const bare = line.trim().replace(/^[^\p{L}\p{N}(]+/u, "");
+      const lab = LABEL_ICON.find(([re]) => re.test(bare));
+      const html = lab ? lab[1] + " " + iconize(highlight(bare, q)) : iconize(highlight(line.trim(), q));
       const m = html.match(/^((?:<svg[\s\S]*?<\/svg>|<span class="bul"><\/span>))\s*([\s\S]*)$/);
       const cls = "ln" + (gap ? " gap" : "") + (m ? (m[1].startsWith("<span") ? " bl" : " ic") : "");
       out += m ? `<div class="${cls}"><span class="lead">${m[1]}</span><span class="tx">${m[2]}</span></div>` : `<div class="${cls}"><span class="tx">${html}</span></div>`;
