@@ -568,10 +568,9 @@ html.qlock #qlock{display:flex}
   var KEY = 'sc_pref_v2';
   var ok = false;
   try { localStorage.removeItem(KEY); ok = sessionStorage.getItem(KEY) === '1'; } catch(e){}
-  if (ok) return;
-  var th=['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
-  var n=new Date(), r=new Date(n.getFullYear(), n.getMonth()+1, 25);
-  document.getElementById('qlock-d').textContent='25 '+th[r.getMonth()]+' '+(r.getFullYear()+543);
+  var UNTIL = new Date('2026-11-25T00:00:00+07:00').getTime();
+  if (ok || Date.now() >= UNTIL) return;
+  document.getElementById('qlock-d').textContent='25 พ.ย. 2569';
   var root = document.documentElement;
   root.classList.add('qlock');
   var seq = ['h','h','d','d','d'], i = 0, st = 0;
@@ -853,7 +852,7 @@ html.qlock #qlock{display:flex}
           ${[["all",L.all],["resolved",L.resolved],["pending",L.pending]].map(([v,t]) => `<button type="button" class="seg-btn ${state.status===v?'active':''}" data-status="${v}">${t}</button>`).join("")}
         </div>
         <div class="seg" role="group" aria-label="${L.sevGroup}">
-          ${[["r",L.r],["g",L.g]].map(([v,t]) => `<button type="button" class="seg-btn sev-btn ${v} ${state.sev===v?'active':''}" data-sev="${v}" aria-pressed="${state.sev===v}" title="${L.sevToggle}"><span class="sev-dot ${v}"></span>${t}</button>`).join("")}
+          ${[["r",L.r],["y",L.y],["g",L.g]].map(([v,t]) => `<button type="button" class="seg-btn sev-btn ${v} ${state.sev===v?'active':''}" data-sev="${v}" aria-pressed="${state.sev===v}" title="${L.sevToggle}"><span class="sev-dot ${v}"></span>${t}</button>`).join("")}
         </div>
         <label class="sort-wrap"><span class="sort-label">${L.sort}</span>
           <select id="sortSel" class="sort-select" aria-label="${L.sortAria}">${SORTS.map(v => `<option value="${v}" ${state.sort===v?'selected':''}>${L[v]}</option>`).join("")}</select>
@@ -980,11 +979,13 @@ html.qlock #qlock{display:flex}
   function recPicks(){
     if(REC_PICKS) return REC_PICKS;
     const d = new Date(); const rnd = seeded(d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate() + 7919);
-    const groups = new Map();
-    CASES.forEach(c => { if(c.closing.trim() && c.cat !== "แจ้งข่าว" && c.opening.length > 60 && REC_RANK.get(c.no) > 40){ if(!groups.has(c.cat)) groups.set(c.cat, []); groups.get(c.cat).push(c); } });
-    const lists = [...groups.values()].map(g => { for(let i = g.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [g[i], g[j]] = [g[j], g[i]]; } return g; });
-    const out = [];
-    for(let i = 0; out.length < 10 && i < 50; i++) lists.forEach(g => { if(g[i] && out.length < 10) out.push(g[i]); });
+    const pool = { r: new Map(), y: new Map(), g: new Map() };
+    CASES.forEach(c => { if(c.closing.trim() && c.cat !== "แจ้งข่าว" && c.opening.length > 60 && REC_RANK.get(c.no) > 40 && pool[c.sev]){ const m = pool[c.sev]; if(!m.has(c.cat)) m.set(c.cat, []); m.get(c.cat).push(c); } });
+    const shuffle = (g) => { for(let i = g.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [g[i], g[j]] = [g[j], g[i]]; } return g; };
+    const streams = {};
+    Object.entries(pool).forEach(([k, m]) => { const lists = shuffle([...m.values()].map(shuffle)); const flat = []; for(let i = 0; i < 40; i++) lists.forEach(g => { if(g[i]) flat.push(g[i]); }); streams[k] = flat; });
+    const out = [], seen = new Set(), order = ["r", "y", "g"];
+    for(let i = 0; out.length < 12 && i < 40; i++) order.forEach(k => { const c = streams[k][i]; if(c && out.length < 12 && !seen.has(c.no)){ seen.add(c.no); out.push(c); } });
     return (REC_PICKS = out);
   }
   function renderFocus(){
