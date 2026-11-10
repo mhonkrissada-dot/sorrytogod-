@@ -537,8 +537,10 @@
   .case-text .tx .ti{ vertical-align:-3px !important; margin:0 3px !important; }
 
   /* Roomier, even gap between lines (about one blank line) */
-  .case-text{ gap:16px !important; }
-  .case-text.clamp{ max-height:14.5em !important; }
+  .case-text{ gap:6px !important; }
+  .case-text .ln.lab:not(:first-child){ margin-top:10px !important; }
+  .case-text .ln.lab + .ln:not(.lab){ margin-top:10px !important; }
+  .case-text.clamp{ max-height:13.6em !important; }
 
 </style>
 </head>
@@ -748,7 +750,7 @@ html.qlock #qlock{display:flex}
       const lab = LABEL_ICON.find(([re]) => re.test(bare));
       const html = lab ? lab[1] + " " + iconize(highlight(bare, q)) : iconize(highlight(line.trim(), q));
       const m = html.match(/^((?:<svg[\s\S]*?<\/svg>|<span class="bul"><\/span>))\s*([\s\S]*)$/);
-      const cls = "ln" + (gap ? " gap" : "") + (m ? (m[1].startsWith("<span") ? " bl" : " ic") : "");
+      const cls = "ln" + (lab ? " lab" : "") + (gap ? " gap" : "") + (m ? (m[1].startsWith("<span") ? " bl" : " ic") : "");
       out += m ? `<div class="${cls}"><span class="lead">${m[1]}</span><span class="tx">${m[2]}</span></div>` : `<div class="${cls}"><span class="tx">${html}</span></div>`;
       gap = false;
     }
