@@ -891,8 +891,7 @@ html.qlock #qlock{display:flex}
 
   /* ---------------- Cards ---------------- */
   function renderCard(c, q){
-    const url = mapUrl(c);
-    const mapBtn = url ? `<a class="map-btn" href="${url}" target="_blank" rel="noopener" data-map-no="${c.no}" title="${esc(c.place.short + " · " + c.place.full)}" aria-label="${esc(L.openMap(c.place.full))}">${ICON.pin}</a>` : "";
+    const mapBtn = "";
     const emptyClose = c.cat === "แจ้งข่าว" ? L.info : (c.resolved ? L.noFix : L.pending);
     const metric = state.sort === "views" ? METRICS.v[c.no] : state.sort === "searched" ? METRICS.s[c.no] : 0;
     const metricTag = metric ? `<span class="metric-tag">${ICON.eye}${state.sort === "views" ? L.viewed(metric) : L.found(metric)}</span>` : "";
@@ -1109,7 +1108,6 @@ html.qlock #qlock{display:flex}
         else if(card.getBoundingClientRect().top < 0) card.scrollIntoView({ block: "start" });
         return;
       }
-      if(t.matches(".map-btn")) addView(+t.getAttribute("data-map-no"));
       if(t.id === "backTop"){ window.scrollTo({ top: 0, behavior: "smooth" }); }
     });
 
