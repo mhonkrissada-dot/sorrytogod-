@@ -878,10 +878,6 @@ html.qlock #qlock{display:flex}
         </div>
       </div>
 
-      <section class="rec" id="rec" hidden>
-        <div class="rec-head"><div><div class="rec-title">${ICON.sparkle}<span>${L.recTitle}</span></div><div class="rec-sub">${L.recSub}</div></div></div>
-        <div class="rec-scroll" id="recScroll"></div>
-      </section>
       <div class="focus-bar" id="focusBar" hidden></div>
       <div id="sortHint" class="sort-hint" hidden></div>
       <div class="list-wrap" id="list"></div>
@@ -957,37 +953,7 @@ html.qlock #qlock{display:flex}
       (active ? `<button type="button" class="chip chip-clear" id="clearCat">${ICON.x}<span>${L.clearCat}</span></button>` : "") +
       subs.slice(0, state.category ? 60 : 24).map(([t, n]) => `<button type="button" class="chip ${state.sub === t ? 'active' : ''}" data-sub="${esc(t)}" aria-pressed="${state.sub === t}">${esc(t)}<span class="chip-n">${n.toLocaleString()}</span></button>`).join("");
   }
-  function firstLine(t){ const l = String(t).split("\n").map(x => x.trim()).find(Boolean) || ""; return l.replace(/^[^\u0E00-\u0E7Fa-zA-Z0-9]+/, "").replace(/^ลักษณะเหตุ\s*:\s*/, ""); }
-  function renderRec(){
-    const box = document.getElementById("rec");
-    const idle = !state.query.trim() && !state.category && !state.sub && state.sev === "all" && state.status === "all" && !state.focus;
-    box.hidden = !idle;
-    if(!idle || box.dataset.lang === LANG) return;
-    box.dataset.lang = LANG;
-    const top = recPicks();
-    document.getElementById("recScroll").innerHTML = top.map(c => `
-      <article class="rec-card">
-        <div class="rec-meta"><span class="sev-dot ${c.sev}"></span><span class="rec-cat">${esc(catName(c.cat))}</span>${c.sub ? `<span class="rec-subcat">${esc(c.sub)}</span>` : ""}</div>
-        <p class="rec-text">${esc(firstLine(c.opening))}</p>
-        <div class="rec-actions">
-          <button type="button" class="rec-open" data-focus="${c.no}">${L.view}${ICON.arrowRight}</button>
-          <button type="button" class="copy-btn rec-copy" data-copy-kind="entire" data-copy-no="${c.no}" aria-label="Copy Case">${ICON.copy}</button>
-        </div>
-      </article>`).join("");
-  }
-  let REC_PICKS = null;
-  function recPicks(){
-    if(REC_PICKS) return REC_PICKS;
-    const d = new Date(); const rnd = seeded(d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate() + 7919);
-    const pool = { r: new Map(), y: new Map(), g: new Map() };
-    CASES.forEach(c => { if(c.closing.trim() && c.cat !== "แจ้งข่าว" && c.opening.length > 60 && REC_RANK.get(c.no) > 40 && pool[c.sev]){ const m = pool[c.sev]; if(!m.has(c.cat)) m.set(c.cat, []); m.get(c.cat).push(c); } });
-    const shuffle = (g) => { for(let i = g.length - 1; i > 0; i--){ const j = Math.floor(rnd() * (i + 1)); [g[i], g[j]] = [g[j], g[i]]; } return g; };
-    const streams = {};
-    Object.entries(pool).forEach(([k, m]) => { const lists = shuffle([...m.values()].map(shuffle)); const flat = []; for(let i = 0; i < 40; i++) lists.forEach(g => { if(g[i]) flat.push(g[i]); }); streams[k] = flat; });
-    const out = [], seen = new Set(), order = ["r", "y", "g"];
-    for(let i = 0; out.length < 12 && i < 40; i++) order.forEach(k => { const c = streams[k][i]; if(c && out.length < 12 && !seen.has(c.no)){ seen.add(c.no); out.push(c); } });
-    return (REC_PICKS = out);
-  }
+  function renderRec(){ /* removed */ }
   function renderFocus(){
     const bar = document.getElementById("focusBar");
     bar.hidden = !state.focus;
@@ -1110,7 +1076,7 @@ html.qlock #qlock{display:flex}
       e.preventDefault(); el.scrollBy({ left: e.deltaY * (e.deltaMode === 1 ? 32 : 1.2), behavior: "auto" });
     }, { passive: false });
   }
-  function bindWheel(){ ["subChips", "recScroll"].forEach(id => wheelX(document.getElementById(id))); wheelX(document.querySelector(".category-grid")); }
+  function bindWheel(){ ["subChips"].forEach(id => wheelX(document.getElementById(id))); wheelX(document.querySelector(".category-grid")); }
   function setLang(l){
     if(l === LANG) return;
     LANG = l; L = I18N[l];
