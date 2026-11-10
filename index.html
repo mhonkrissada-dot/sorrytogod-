@@ -729,9 +729,9 @@ html.qlock #qlock{display:flex}
   );
   /* Fixed icons for the three standard headings, whatever emoji the source text used */
   const LABEL_ICON = [
-    [/^ลักษณะเหตุ/, SVI('<path d="M10.3 3.8 1.9 18a1.5 1.5 0 0 0 1.3 2.2h17.6a1.5 1.5 0 0 0 1.3-2.2L13.7 3.8a1.5 1.5 0 0 0-3.4 0z"/><line x1="12" y1="9.5" x2="12" y2="13.5"/><line x1="12" y1="17" x2="12.01" y2="17"/>')],
-    [/^ผลกระทบ/, SVI('<path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 .3 1.5 1 2 2 2 0-3-1-5 1-8z"/>')],
-    [/^แนวทาง(?:ที่จะ)?(?:การ)?แก้ไข/, SVI('<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6 2 2 6-6a4 4 0 0 0 5.4-5.4l-2.6 2.6-2-2z"/>')]
+    [/^ลักษณะเหตุ/, SVI('<path d="M12 3.4 21.4 19.6H2.6z"/><line x1="12" y1="9.6" x2="12" y2="13.6"/><line x1="12" y1="16.6" x2="12.01" y2="16.6"/>')],
+    [/^ผลกระทบ/, SVI('<g transform="translate(12 12) scale(1.08) translate(-12 -12)" stroke-width="1.85"><path d="M12 12c2-2.96 0-7-1-8 0 3.04-1.77 4.74-3 6-1.23 1.26-2 3.24-2 5a6 6 0 1 0 12 0c0-1.53-1.06-3.94-2-5-1.79 3-2.79 3-4 2z"/></g>')],
+    [/^แนวทาง(?:ที่จะ)?(?:การ)?แก้ไข/, SVI('<g transform="translate(12 12) scale(.84) translate(-12 -12)" stroke-width="2.4"><path d="M7 10h3V7L6.5 3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1-3 3l-6-6a6 6 0 0 1-8-8z"/></g>')]
   ];
   /* Render text as tidy lines: icon column + text, even spacing between every line */
   function renderText(text, q){
