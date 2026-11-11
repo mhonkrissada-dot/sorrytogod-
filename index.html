@@ -610,6 +610,9 @@
   .filterbar .search-clear{ display:none !important; }
   .filterbar .search-bar-wrap{ flex:1 1 420px !important; max-width:none !important; }
 
+  /* Sub-category row sits under the main category cards, just above the cases */
+  .subbar{ margin-top:14px; }
+
 </style>
 </head>
 <body>
@@ -947,11 +950,6 @@ html.qlock #qlock{display:flex}
         </label>
       </div>
 
-      <div class="subbar">
-        <span class="subbar-label" id="subLabel"></span>
-        <div class="chip-scroll" id="subChips"></div>
-      </div>
-
       <div class="category-stats-wrap">
         <div class="category-grid">
           ${CATEGORY_COUNTS.map(([cat, count]) => {
@@ -966,6 +964,11 @@ html.qlock #qlock{display:flex}
 
       <div class="focus-bar" id="focusBar" hidden></div>
       <div id="sortHint" class="sort-hint" hidden></div>
+      <div class="subbar">
+        <span class="subbar-label" id="subLabel"></span>
+        <div class="chip-scroll" id="subChips"></div>
+      </div>
+
       <div class="list-wrap" id="list"></div>
       <div class="list-foot" id="listFoot"></div>
       <div id="sentinel" aria-hidden="true"></div>
