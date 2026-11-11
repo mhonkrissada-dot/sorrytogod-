@@ -597,6 +597,15 @@
   .filterbar .search-icon svg{ width:20px; height:20px; }
   .filterbar .search-clear{ right:14px !important; }
 
+  /* Search sits on the same row as the status and severity filters, like the circled layout */
+  .filterbar .fb-break{ display:none !important; }
+  .filterbar .search-bar-wrap{ flex:1 1 280px !important; max-width:400px !important; min-width:0; }
+  .filterbar .sort-wrap{ order:10; }
+  .filterbar .results-count{ order:11; }
+  @media (min-width:721px){
+    .filterbar .results-count{ margin-left:auto; }
+  }
+
 </style>
 </head>
 <body>
