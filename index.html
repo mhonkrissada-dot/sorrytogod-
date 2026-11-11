@@ -606,6 +606,10 @@
     .filterbar .results-count{ margin-left:auto; }
   }
 
+  /* No clear-x inside the search box; reset only clears filters. Search fills the row. */
+  .filterbar .search-clear{ display:none !important; }
+  .filterbar .search-bar-wrap{ flex:1 1 420px !important; max-width:none !important; }
+
 </style>
 </head>
 <body>
@@ -933,9 +937,6 @@ html.qlock #qlock{display:flex}
           </div>
         <div class="fb-break" aria-hidden="true"></div>
         <button type="button" class="reset-top" id="resetTop" hidden title="${L.resetAll}" aria-label="${L.resetAll}"><span aria-hidden="true">×</span> ล้าง</button>
-        <div class="seg" role="group" aria-label="${L.status}">
-          ${[["all",L.all],["resolved",L.resolved],["pending",L.pending]].map(([v,t]) => `<button type="button" class="seg-btn ${state.status===v?'active':''}" data-status="${v}">${t}</button>`).join("")}
-        </div>
         <div class="seg" role="group" aria-label="${L.sevGroup}">
           ${[["r",L.r],["y",L.y],["g",L.g]].map(([v,t]) => `<button type="button" class="seg-btn sev-btn ${v} ${state.sev===v?'active':''}" data-sev="${v}" aria-pressed="${state.sev===v}" title="${L.sevToggle}"><span class="sev-dot ${v}"></span>${t}</button>`).join("")}
         </div>
@@ -1071,7 +1072,7 @@ html.qlock #qlock{display:flex}
   function refreshList(){
     FILTERED = getFiltered();
     const rt = document.getElementById("resetTop");
-    if(rt) rt.hidden = !(state.query.trim() || state.category || state.sub || state.status !== "all" || state.sev !== "all" || state.focus);
+    if(rt) rt.hidden = !(state.category || state.sub || state.status !== "all" || state.sev !== "all" || state.focus);
     state.shown = 0;
     const list = document.getElementById("list");
     list.innerHTML = FILTERED.length ? "" : emptyState();
@@ -1213,9 +1214,8 @@ html.qlock #qlock{display:flex}
   function setActive(sel, btn){ document.querySelectorAll(".seg-btn" + sel).forEach(b => b.classList.toggle("active", b === btn)); }
   function syncStatCards(){ document.querySelectorAll(".stat-card[data-cat]").forEach(b => { const on = b.getAttribute("data-cat") === state.category; b.classList.toggle("active", on); b.setAttribute("aria-pressed", on); }); }
   function resetAll(){
-    Object.assign(state, { query: "", category: null, sub: null, status: "all", sev: "all", focus: 0 });
-    const input = document.getElementById("searchInput"); input.value = ""; document.getElementById("clearSearch").style.display = "none";
-    setActive("[data-status]", document.querySelector('[data-status="all"]')); document.querySelectorAll(".seg-btn[data-sev]").forEach(b => { b.classList.remove("active"); b.setAttribute("aria-pressed", false); });
+    Object.assign(state, { category: null, sub: null, status: "all", sev: "all", focus: 0 });
+        setActive("[data-status]", document.querySelector('[data-status="all"]')); document.querySelectorAll(".seg-btn[data-sev]").forEach(b => { b.classList.remove("active"); b.setAttribute("aria-pressed", false); });
     syncStatCards(); renderSubChips(); refreshList();
   }
 
