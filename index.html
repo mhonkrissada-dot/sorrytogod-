@@ -586,6 +586,10 @@
   .filterbar .seg-btn.sev-btn.active.y{ background:var(--sev-y-bg) !important; color:var(--sev-y-fg) !important; box-shadow:0 0 0 1px var(--sev-y-bd) inset !important; }
   .filterbar .seg-btn.sev-btn.active.g{ background:var(--sev-g-bg) !important; color:var(--sev-g-fg) !important; box-shadow:0 0 0 1px var(--sev-g-bd) inset !important; }
 
+  /* Small compact clear button */
+  .filterbar .reset-top{ font-size:12px !important; padding:4px 10px !important; gap:4px; line-height:1.4; }
+  .filterbar .reset-top span{ font-size:14px; line-height:1; }
+
 </style>
 </head>
 <body>
@@ -906,13 +910,13 @@ html.qlock #qlock{display:flex}
 
       <div class="filterbar">
         <div class="search-bar-wrap">
-            <input id="searchInput" class="search-bar" type="search" placeholder="${L.ph}" autocomplete="off" enterkeyhint="search" aria-label="${L.search}" />
+            <input id="searchInput" class="search-bar" type="search" placeholder="Search" autocomplete="off" enterkeyhint="search" aria-label="${L.search}" />
             <button type="button" class="search-clear" id="clearSearch" style="display:none" aria-label="${L.clear}">${ICON.x}</button>
             <kbd class="search-kbd" aria-hidden="true">/</kbd>
             <span class="search-icon">${ICON.search}</span>
           </div>
         <div class="fb-break" aria-hidden="true"></div>
-        <button type="button" class="reset-top" id="resetTop" hidden>${L.resetAll}</button>
+        <button type="button" class="reset-top" id="resetTop" hidden title="${L.resetAll}" aria-label="${L.resetAll}"><span aria-hidden="true">×</span> ล้าง</button>
         <div class="seg" role="group" aria-label="${L.status}">
           ${[["all",L.all],["resolved",L.resolved],["pending",L.pending]].map(([v,t]) => `<button type="button" class="seg-btn ${state.status===v?'active':''}" data-status="${v}">${t}</button>`).join("")}
         </div>
