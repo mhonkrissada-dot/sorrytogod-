@@ -543,6 +543,11 @@
   .case-text.clamp{ max-height:13.6em !important; }
   .case-card.expanded .case-text.clamp{ max-height:none !important; overflow:visible; -webkit-mask-image:none; mask-image:none; }
 
+  /* One-tap reset for search and every active filter */
+  .reset-top{ font:inherit; font-size:13px; font-weight:500; color:var(--fg); background:var(--surface); border:1px solid var(--line); border-radius:999px; padding:6px 14px; cursor:pointer; white-space:nowrap; align-self:center; margin:0 0 0 8px; }
+  .reset-top:hover{ border-color:var(--accent); color:var(--accent); }
+  .reset-top:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+
 </style>
 </head>
 <body>
@@ -831,7 +836,7 @@ html.qlock #qlock{display:flex}
     let list = CASES.filter(c => (!state.category || c.cat === state.category) && (!state.sub || c.sub === state.sub)
       && (state.sev === "all" || c.sev === state.sev)
       && (state.status === "all" || state.category === "แจ้งข่าว" || (state.status === "resolved") === c.resolved)
-      && (!q || c.hay.includes(q)));
+      && (!q || q.split(/\s+/).every(w => c.hay.includes(w))));
     if(state.sort === "desc") list = list.slice().reverse();
     else if(state.sort === "rec") list = list.slice().sort((a,b) => REC_RANK.get(a.no) - REC_RANK.get(b.no));
     else if(state.sort === "views" || state.sort === "searched"){
@@ -868,6 +873,7 @@ html.qlock #qlock{display:flex}
             <button type="button" class="search-clear" id="clearSearch" style="display:none" aria-label="${L.clear}">${ICON.x}</button>
             <kbd class="search-kbd" aria-hidden="true">/</kbd>
           </div>
+        <button type="button" class="reset-top" id="resetTop" hidden>${L.resetAll}</button>
         <div class="seg" role="group" aria-label="${L.status}">
           ${[["all",L.all],["resolved",L.resolved],["pending",L.pending]].map(([v,t]) => `<button type="button" class="seg-btn ${state.status===v?'active':''}" data-status="${v}">${t}</button>`).join("")}
         </div>
@@ -1005,6 +1011,8 @@ html.qlock #qlock{display:flex}
   }
   function refreshList(){
     FILTERED = getFiltered();
+    const rt = document.getElementById("resetTop");
+    if(rt) rt.hidden = !(state.query.trim() || state.category || state.sub || state.status !== "all" || state.sev !== "all" || state.focus);
     state.shown = 0;
     const list = document.getElementById("list");
     list.innerHTML = FILTERED.length ? "" : emptyState();
@@ -1119,7 +1127,7 @@ html.qlock #qlock{display:flex}
       if(t.matches(".stat-card")){ const cat = t.getAttribute("data-cat"); state.focus = 0; state.category = state.category === cat ? null : cat; state.sub = null; syncStatCards(); renderSubChips(); return refreshList(); }
       if(t.matches(".chip[data-sub]")){ const v = t.getAttribute("data-sub"); state.focus = 0; state.sub = state.sub === v ? null : v; renderSubChips(); return refreshList(); }
       if(t.id === "clearCat"){ state.category = null; state.sub = null; syncStatCards(); renderSubChips(); return refreshList(); }
-      if(t.id === "resetAll"){ resetAll(); return; }
+      if(t.id === "resetAll" || t.id === "resetTop"){ resetAll(); return; }
       if(t.matches(".copy-btn[data-copy-no]")) return handleCopy(t);
       if(t.matches(".more-btn")){
         const card = t.closest(".case-card"); const open = card.classList.toggle("expanded");
