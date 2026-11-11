@@ -548,44 +548,33 @@
   .reset-top:hover{ border-color:var(--accent); color:var(--accent); }
   .reset-top:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
 
-  /* ---- Search: rounded gradient-edged bar with soft blue glow on focus ---- */
-  .search-bar-wrap .search-bar{
-    border-radius:999px !important;
-    border:1.5px solid transparent !important;
-    background:
-      linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
-      linear-gradient(120deg, #3b82f6, #06b6d4 55%, #818cf8) border-box !important;
-    box-shadow:0 1px 2px rgba(15,23,42,.08);
-    transition:box-shadow .3s ease, transform .3s ease;
+  /* ---- Clean search: thin pill on its own row, magnifier outside on the right ---- */
+  .filterbar .search-bar-wrap{ flex:1 1 100% !important; max-width:680px !important; margin:0 auto !important; display:flex; align-items:center; gap:14px; position:relative; }
+  .filterbar .search-bar{
+    flex:1 1 auto; min-width:0; border-radius:999px !important; border:1px solid var(--border) !important;
+    background:var(--surface) !important; box-shadow:none !important;
+    padding:12px 44px 12px 22px !important; font-size:15px !important;
+    transition:border-color .2s ease, box-shadow .2s ease;
   }
-  .search-bar-wrap .search-bar:focus{
-    background:
-      linear-gradient(var(--surface), var(--surface)) padding-box,
-      linear-gradient(120deg, #3b82f6, #06b6d4 55%, #818cf8) border-box !important;
-    box-shadow:0 0 0 4px var(--ring), 0 0 26px rgba(59,130,246,.38), 0 10px 30px -12px rgba(6,182,212,.45) !important;
-    transform:translateY(-1px);
-  }
-  .search-bar-wrap .search-icon{ color:#3b82f6; transition:color .25s ease, transform .3s ease; }
-  .search-bar-wrap .search-bar:focus ~ .search-icon{ color:#06b6d4; transform:scale(1.08); }
-  .search-bar-wrap .search-clear{ border-radius:999px; transition:background .2s ease, transform .2s ease; }
-  .search-bar-wrap .search-clear:hover{ transform:scale(1.08); }
+  .filterbar .search-bar:focus{ border-color:var(--text-3) !important; box-shadow:0 0 0 3px var(--ring) !important; }
+  .filterbar .search-icon{ position:static !important; transform:none !important; left:auto !important; flex:none; display:flex; color:var(--text-3); }
+  .filterbar .search-icon svg{ width:22px; height:22px; }
+  .filterbar .search-clear{ position:absolute !important; right:50px !important; top:50% !important; transform:translateY(-50%) !important; }
+  .filterbar .search-kbd{ display:none !important; }
 
-  /* Active filter pills get the same blue gradient with a glow */
-  .seg-btn.active{
-    background:linear-gradient(120deg,#2563eb,#06b6d4) !important;
-    color:#fff !important;
-    box-shadow:0 6px 18px -6px rgba(37,99,235,.55), 0 0 0 1px rgba(255,255,255,.12) inset;
-    transition:background .3s ease, box-shadow .3s ease, transform .2s ease;
+  /* Sort sits quietly beside the case count */
+  .filterbar .sort-wrap{ flex:0 0 auto !important; gap:4px; }
+  .filterbar .sort-label{ font-size:12.5px; }
+  .filterbar .sort-select{ border:0 !important; background:transparent !important; box-shadow:none !important; padding:4px 20px 4px 2px !important; font-size:13px !important; color:var(--text-1); cursor:pointer; min-width:0 !important; width:auto !important; }
+  .filterbar .sort-chev{ right:0 !important; pointer-events:none; }
+  @media (max-width:720px){
+    .filterbar .search-bar{ font-size:16px !important; }
+    .filterbar .results-count{ margin-left:0; }
+    .filterbar .sort-wrap{ margin-left:auto; }
   }
-  .seg-btn:not(.active):hover{ transform:translateY(-1px); }
-
-  /* One-tap reset: gradient on hover */
-  .reset-top{ transition:background .25s ease, color .25s ease, border-color .25s ease, box-shadow .3s ease, transform .2s ease; }
-  .reset-top:hover{ background:linear-gradient(120deg,#2563eb,#06b6d4); color:#fff; border-color:transparent; box-shadow:0 6px 18px -6px rgba(37,99,235,.55); transform:translateY(-1px); }
-
-  @media (prefers-reduced-motion:reduce){
-    .search-bar-wrap .search-bar, .search-bar-wrap .search-bar:focus, .search-bar-wrap .search-icon, .seg-btn, .reset-top{ transition:none !important; transform:none !important; }
-  }
+  .filterbar .fb-break{ flex:0 0 100%; height:0; }
+  .filterbar .sort-select{ field-sizing:content; }
+  .filterbar .sort-chev{ position:static !important; transform:none !important; margin-left:-18px; display:flex; }
 
 </style>
 </head>
@@ -907,11 +896,12 @@ html.qlock #qlock{display:flex}
 
       <div class="filterbar">
         <div class="search-bar-wrap">
-            <span class="search-icon">${ICON.search}</span>
             <input id="searchInput" class="search-bar" type="search" placeholder="${L.ph}" autocomplete="off" enterkeyhint="search" aria-label="${L.search}" />
             <button type="button" class="search-clear" id="clearSearch" style="display:none" aria-label="${L.clear}">${ICON.x}</button>
             <kbd class="search-kbd" aria-hidden="true">/</kbd>
+            <span class="search-icon">${ICON.search}</span>
           </div>
+        <div class="fb-break" aria-hidden="true"></div>
         <button type="button" class="reset-top" id="resetTop" hidden>${L.resetAll}</button>
         <div class="seg" role="group" aria-label="${L.status}">
           ${[["all",L.all],["resolved",L.resolved],["pending",L.pending]].map(([v,t]) => `<button type="button" class="seg-btn ${state.status===v?'active':''}" data-status="${v}">${t}</button>`).join("")}
@@ -919,11 +909,11 @@ html.qlock #qlock{display:flex}
         <div class="seg" role="group" aria-label="${L.sevGroup}">
           ${[["r",L.r],["y",L.y],["g",L.g]].map(([v,t]) => `<button type="button" class="seg-btn sev-btn ${v} ${state.sev===v?'active':''}" data-sev="${v}" aria-pressed="${state.sev===v}" title="${L.sevToggle}"><span class="sev-dot ${v}"></span>${t}</button>`).join("")}
         </div>
+        <div class="results-count" id="resultsCount" aria-live="polite"></div>
         <label class="sort-wrap"><span class="sort-label">${L.sort}</span>
           <select id="sortSel" class="sort-select" aria-label="${L.sortAria}">${SORTS.map(v => `<option value="${v}" ${state.sort===v?'selected':''}>${L[v]}</option>`).join("")}</select>
           <span class="sort-chev">${ICON.chevDown}</span>
         </label>
-        <div class="results-count" id="resultsCount" aria-live="polite"></div>
       </div>
 
       <div class="subbar">
