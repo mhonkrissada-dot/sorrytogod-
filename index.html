@@ -576,6 +576,16 @@
   .filterbar .sort-select{ field-sizing:content; }
   .filterbar .sort-chev{ position:static !important; transform:none !important; margin-left:-18px; display:flex; }
 
+  /* Active filter buttons back to the neutral grey look; severity keeps its own colour */
+  .filterbar .seg-btn.active:not(.sev-btn){
+    background:var(--surface-2) !important; color:var(--text-1) !important;
+    box-shadow:0 0 0 1px var(--border) inset !important; font-weight:600;
+  }
+  .filterbar .seg-btn.sev-btn.active{ box-shadow:none !important; }
+  .filterbar .seg-btn.sev-btn.active.r{ background:var(--sev-r-bg) !important; color:var(--sev-r-fg) !important; box-shadow:0 0 0 1px var(--sev-r-bd) inset !important; }
+  .filterbar .seg-btn.sev-btn.active.y{ background:var(--sev-y-bg) !important; color:var(--sev-y-fg) !important; box-shadow:0 0 0 1px var(--sev-y-bd) inset !important; }
+  .filterbar .seg-btn.sev-btn.active.g{ background:var(--sev-g-bg) !important; color:var(--sev-g-fg) !important; box-shadow:0 0 0 1px var(--sev-g-bd) inset !important; }
+
 </style>
 </head>
 <body>
