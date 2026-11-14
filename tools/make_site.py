@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 สร้างไฟล์หน้าเว็บใหม่จากไฟล์ Excel ของ AppSheet
-ไม่เก็บชื่อสถานที่และพิกัดลงในไฟล์
+ไม่เก็บชื่อสถานที่ พิกัด และเบอร์โทรลงในไฟล์
 
 ติดตั้งครั้งเดียว:   pip install pandas openpyxl
 
@@ -23,9 +23,21 @@ SEV = {'แดง': 'r', 'เหลือง': 'y', 'เขียว': 'g'}
 BLOB = re.compile(r'(<div id="data-blob" style="display:none">)([A-Za-z0-9+/=]+)(</div>)')
 
 
+# Phone numbers are removed from case text before it goes on the web
+PHONE = re.compile(r'(?<![\d/.])(?:\+66[\s-]?|0)(?:\d{1,2}[\s.-]?\d{3}[\s.-]?\d{3,4}|\d[\s.-]?\d{4}[\s.-]?\d{4})(?![\d/])')
+PHONE_AFTER_WORD = re.compile(r'(โทร\S{0,4}\s*)0(?:[\s-]?\d){8,9}')
+PHONE_MASK = '[ลบเบอร์โทร]'
+
+
+def strip_phones(s):
+    s = PHONE_AFTER_WORD.sub(lambda m: m.group(1) + PHONE_MASK, s)
+    return PHONE.sub(PHONE_MASK, s)
+
+
 def clean(s):
     if not isinstance(s, str):
         return ''
+    s = strip_phones(s)
     s = s.replace('\\n', '\n').replace('\r\n', '\n').replace('\r', '\n')
     s = re.sub(r'\n{3,}', '\n\n', s)
     return s.strip()
