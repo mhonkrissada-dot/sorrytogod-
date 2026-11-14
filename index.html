@@ -616,6 +616,12 @@
   /* Only the top reset button clears filters; hide the duplicate "x ล้างหมวด" chip */
   .chip-clear{ display:none !important; }
 
+  /* Text size presets for case text */
+  html[data-fs="s"] .case-text{ font-size:13.5px !important; line-height:1.55 !important; }
+  html[data-fs="l"] .case-text{ font-size:18px !important; line-height:1.7 !important; }
+  .fs-seg{ display:flex; }
+  .fs-seg .fs-btn{ min-width:34px; padding:6px 8px; line-height:1; }
+
 </style>
 </head>
 <body>
@@ -904,7 +910,7 @@ html.qlock #qlock{display:flex}
     let list = CASES.filter(c => (!state.category || c.cat === state.category) && (!state.sub || c.sub === state.sub)
       && (state.sev === "all" || c.sev === state.sev)
       && (state.status === "all" || state.category === "แจ้งข่าว" || (state.status === "resolved") === c.resolved)
-      && (!q || q.split(/\s+/).every(w => c.hay.includes(w))));
+      && (!q || q.split("|").some(g => { const ws = g.trim().split(/\s+/).filter(Boolean); return ws.length > 0 && ws.every(w => c.hay.includes(w)); })));
     if(state.sort === "desc") list = list.slice().reverse();
     else if(state.sort === "rec") list = list.slice().sort((a,b) => REC_RANK.get(a.no) - REC_RANK.get(b.no));
     else if(state.sort === "views" || state.sort === "searched"){
@@ -943,6 +949,7 @@ html.qlock #qlock{display:flex}
           </div>
         <div class="fb-break" aria-hidden="true"></div>
         <button type="button" class="reset-top" id="resetTop" hidden title="${L.resetAll}" aria-label="${L.resetAll}"><span aria-hidden="true">×</span> ล้าง</button>
+        <div class="seg fs-seg" role="group" aria-label="ขนาดตัวอักษร"><button type="button" class="seg-btn fs-btn" data-fs="s" aria-label="เล็ก"><span style="font-size:12px">ก</span></button><button type="button" class="seg-btn fs-btn" data-fs="m" aria-label="กลาง"><span style="font-size:15px">ก</span></button><button type="button" class="seg-btn fs-btn" data-fs="l" aria-label="ใหญ่"><span style="font-size:19px">ก</span></button></div>
         <div class="seg" role="group" aria-label="${L.sevGroup}">
           ${[["r",L.r],["y",L.y],["g",L.g]].map(([v,t]) => `<button type="button" class="seg-btn sev-btn ${v} ${state.sev===v?'active':''}" data-sev="${v}" aria-pressed="${state.sev===v}" title="${L.sevToggle}"><span class="sev-dot ${v}"></span>${t}</button>`).join("")}
         </div>
@@ -1239,6 +1246,27 @@ html.qlock #qlock{display:flex}
     app.innerHTML = `<div class="loading-wrap"><div class="err-ico">${ICON.alertCircle}</div><div style="font-weight:600;color:var(--text-1);">ไม่สามารถโหลดข้อมูลได้</div><div style="max-width:420px;text-align:center;">เบราว์เซอร์นี้อาจไม่รองรับฟีเจอร์ที่จำเป็น กรุณาอัปเดตเบราว์เซอร์เป็นเวอร์ชันล่าสุด</div><button type="button" class="copy-btn" onclick="location.reload()">${ICON.refresh}<span>ลองใหม่</span></button></div>`;
     console.error(err);
   });
+})();
+</script>
+<script>
+(function(){
+  var root = document.documentElement;
+  function apply(v){
+    if(v !== "s" && v !== "l") v = "m";
+    root.setAttribute("data-fs", v);
+    document.querySelectorAll(".fs-btn").forEach(function(b){
+      var on = b.getAttribute("data-fs") === v;
+      b.classList.toggle("active", on); b.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+    try{ localStorage.setItem("sc_fs", v); }catch(e){}
+  }
+  var saved = "m"; try{ saved = localStorage.getItem("sc_fs") || "m"; }catch(e){}
+  apply(saved);
+  document.addEventListener("click", function(e){
+    var b = e.target.closest && e.target.closest(".fs-btn");
+    if(b) apply(b.getAttribute("data-fs"));
+  });
+  new MutationObserver(function(){ var cur = root.getAttribute("data-fs") || "m"; apply(cur); }).observe(document.body, {childList:true, subtree:true});
 })();
 </script>
 </body>
