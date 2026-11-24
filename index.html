@@ -878,10 +878,10 @@
 .live-plus{ font-size:17px; line-height:1; }
 .live-kbd{ font:600 11px/1 'Urbanist',system-ui,sans-serif; padding:3px 6px; border-radius:5px; background:color-mix(in srgb, var(--surface) 18%, transparent); color:inherit; }
 @media (max-width:640px){ .live-new-txt,.live-kbd{ display:none; } .live-new{ padding:8px 12px; } }
-.tpl-btn{ display:inline-flex; align-items:center; gap:5px; font:inherit; font-size:12.5px; font-weight:500; color:var(--text-2); background:none; border:1px solid transparent; border-radius:8px; padding:4px 10px; min-height:36px; cursor:pointer; white-space:nowrap; transition:color .15s, background .15s; }
-.tpl-btn span{ color:var(--text-3); transition:transform .15s, color .15s; }
-.tpl-btn:hover{ color:var(--accent); background:var(--accent-soft); }
-.tpl-btn:hover span{ color:var(--accent); transform:translateX(2px); }
+.tpl-btn{ display:inline-flex; align-items:center; gap:6px; font:inherit; font-size:12.5px; font-weight:600; color:var(--text-1); background:var(--surface); border:1px solid var(--border-strong); border-radius:8px; padding:4px 12px; min-height:36px; cursor:pointer; white-space:nowrap; transition:color .15s, border-color .15s, background .15s; }
+.tpl-btn svg{ color:var(--text-3); transition:color .15s; }
+.tpl-btn:hover{ color:var(--accent); border-color:var(--accent); background:var(--accent-soft); }
+.tpl-btn:hover svg{ color:var(--accent); }
 .tpl-btn:focus-visible{ outline:none; box-shadow:0 0 0 3px var(--ring); }
 .case-card.tpl-src{ border-color:var(--accent); box-shadow:0 0 0 2px var(--ring); }
 @media (min-width:1100px){ body.live-open #app{ margin-right:var(--live-w); } }
@@ -903,32 +903,25 @@
 .lv-add:hover,.lv-x:hover{ color:var(--text-1); border-color:var(--border-strong); }
 .lv-x{ flex:none; display:grid; place-items:center; width:40px; height:40px; color:var(--text-3); background:none; border:1px solid transparent; border-radius:10px; cursor:pointer; }
 .lv-body{ flex:1; overflow-y:auto; padding:16px 16px 24px; display:flex; flex-direction:column; gap:14px; overscroll-behavior:contain; }
-.lv-top{ display:flex; flex-wrap:wrap; gap:12px; align-items:flex-end; }
-.lv-proj{ flex:1 1 180px; min-width:0; }
-.lv-f{ display:flex; flex-direction:column; gap:6px; min-width:0; }
-.lv-lrow{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
-.lv-lb{ font-size:13px; font-weight:500; color:var(--text-2); display:inline-flex; align-items:center; gap:6px; }
-.lv-ic{ font-family:'Noto Color Emoji',sans-serif; font-size:13px; }
-.lv-sec{ font-size:14.5px; font-weight:700; color:var(--text-1); margin-top:6px; }
-.lv-in{ font:inherit; font-size:15.5px; line-height:1.55; color:var(--text-1); background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:9px 12px; width:100%; box-sizing:border-box; min-height:44px; transition:border-color .15s, box-shadow .15s, background .15s; }
-.lv-ta{ resize:none; overflow:hidden; display:block; }
-.lv-in::placeholder{ color:var(--text-3); }
-.lv-in:focus{ outline:none; background:var(--surface); border-color:var(--accent); box-shadow:0 0 0 3px var(--ring); }
-.lv-now{ font:inherit; font-size:13px; font-weight:600; color:var(--accent); background:none; border:0; padding:4px 2px; cursor:pointer; }
+.lv-body{ gap:10px; padding:14px 16px 16px; }
+.lv-bar{ display:flex; align-items:center; justify-content:space-between; gap:8px; }
+.lv-hint{ font-size:12.5px; color:var(--text-3); min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.lv-now{ flex:none; font:inherit; font-size:13px; font-weight:600; color:var(--accent); background:none; border:0; padding:6px 2px; min-height:32px; cursor:pointer; }
 .lv-now:hover{ color:var(--accent-strong); text-decoration:underline; }
-.lv-sev{ display:flex; gap:6px; }
-.lv-sv{ font:inherit; font-size:13.5px; font-weight:600; color:var(--text-2); background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:0 12px; min-height:44px; cursor:pointer; }
-.lv-sv.r.on{ color:var(--sev-r-fg); background:var(--sev-r-bg); border-color:var(--sev-r-bd); }
-.lv-sv.y.on{ color:var(--sev-y-fg); background:var(--sev-y-bg); border-color:var(--sev-y-bd); }
-.lv-sv.g.on{ color:var(--sev-g-fg); background:var(--sev-g-bg); border-color:var(--sev-g-bd); }
-.lv-foot{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); align-items:center; gap:8px; padding:12px 16px; padding-bottom:calc(12px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--border); background:var(--surface); }
-.lv-status{ grid-column:1 / -1; font-size:12.5px; color:var(--success-fg); line-height:1.35; min-height:17px; }
-.lv-btn{ white-space:nowrap; }
+.lv-box{ flex:1; min-height:320px; width:100%; box-sizing:border-box; resize:none; font:inherit; font-size:15.5px; line-height:1.7; color:var(--text-1); background:var(--surface-2); border:1px solid var(--border); border-radius:12px; padding:14px 16px; transition:border-color .15s, box-shadow .15s, background .15s; }
+.lv-box::placeholder{ color:var(--text-3); }
+.lv-box:focus{ outline:none; background:var(--surface); border-color:var(--accent); box-shadow:0 0 0 3px var(--ring); }
+.lv-foot{ display:flex; align-items:center; gap:8px; padding:12px 16px; padding-bottom:calc(12px + env(safe-area-inset-bottom,0px)); border-top:1px solid var(--border); background:var(--surface); }
+.lv-status{ flex:1; min-width:0; font-size:12.5px; color:var(--success-fg); line-height:1.35; }
 .lv-ok{ font-size:10px; }
-.lv-btn{ font:inherit; font-size:13px; font-weight:600; line-height:1.3; color:var(--text-1); background:var(--surface); border:1px solid var(--border-strong); border-radius:10px; padding:8px 10px; min-height:44px; cursor:pointer; text-align:center; }
+.lv-btn{ font:inherit; font-size:13.5px; font-weight:600; color:var(--text-1); background:var(--surface); border:1px solid var(--border-strong); border-radius:10px; padding:0 16px; min-height:44px; cursor:pointer; white-space:nowrap; }
 .lv-btn:hover{ border-color:var(--text-3); }
+.lv-btn.ghost{ color:var(--text-2); border-color:transparent; }
+.lv-btn.ghost:hover{ color:var(--sev-r-fg); border-color:var(--border); }
+.lv-btn.arm{ color:var(--sev-r-fg); border-color:var(--sev-r-bd); background:var(--sev-r-bg); }
 .lv-btn.primary{ color:var(--surface); background:var(--text-1); border-color:var(--text-1); }
-@media (max-width:420px){ .lv-btn{ white-space:normal; } }
+.lv-tab-b{ max-width:220px; overflow:hidden; text-overflow:ellipsis; }
+
 
 </style>
 </head>
@@ -1382,7 +1375,7 @@ html.qlock #qlock{display:flex}
           </div>
           <div class="case-head-right">
             ${mapBtn}
-            <button type="button" class="tpl-btn" data-tpl-no="${c.no}">${LANG==="en" ? "Use as template" : "ใช้เป็นแบบ"} <span aria-hidden="true">→</span></button><button type="button" class="copy-btn primary" data-copy-kind="entire" data-copy-no="${c.no}">${ICON.copy}<span>Copy Case</span></button>
+            <button type="button" class="tpl-btn" data-tpl-no="${c.no}"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg><span>${LANG==="en" ? "Use template" : "ใช้แม่แบบ"}</span></button><button type="button" class="copy-btn primary" data-copy-kind="entire" data-copy-no="${c.no}">${ICON.copy}<span>Copy Case</span></button>
           </div>
         </div>
         <div class="case-columns">
@@ -1819,7 +1812,7 @@ html.qlock #qlock{display:flex}
         '<input class="nt-e" value="' + esc(r.e) + '" placeholder="' + (en ? "What happened" : "เหตุการณ์") + '" aria-label="' + (en ? "Event" : "เหตุการณ์") + '">' +
         '<span class="nt-tools"><button type="button" class="nt-copy" aria-label="' + (en ? "Copy row" : "คัดลอกทั้งแถว") + '">' + COPY + '</button>' +
         '<button type="button" class="nt-del" aria-label="' + (en ? "Delete row" : "ลบแถว") + '">×</button></span></div>';
-    }).join("") || '<div class="nt-empty">' + (en ? "No notes yet. Add a row to start." : "ยังไม่มีโน้ต กดเพิ่มแถวเพื่อเริ่มจด") + '</div>';
+    }).join("") || '<div class="nt-empty" tabindex="0">' + (en ? "No notes yet. Add a row, or click here and paste (Ctrl+V) rows from a sheet." : "ยังไม่มีโน้ต กดเพิ่มแถว หรือคลิกตรงนี้แล้ววาง (Ctrl+V) ข้อมูลจากชีทได้เลย") + '</div>';
     if(box.getAttribute("data-sig") === html && box.firstChild) return;
     box.innerHTML = html; box.setAttribute("data-sig", html);
   }
@@ -1829,6 +1822,56 @@ html.qlock #qlock{display:flex}
       out.push({ p: r.querySelector(".nt-p").value, t: r.querySelector(".nt-t").value, e: r.querySelector(".nt-e").value }); });
     return out;
   }
+  function tsv(raw){
+    var out = [], row = [], cell = "", q = false, s = String(raw || "").replace(/\r\n?/g, "\n");
+    for(var i = 0; i < s.length; i++){
+      var ch = s[i];
+      if(q){ if(ch === '"'){ if(s[i + 1] === '"'){ cell += '"'; i++; } else q = false; } else cell += ch; continue; }
+      if(ch === '"' && cell === ""){ q = true; continue; }
+      if(ch === "\t"){ row.push(cell); cell = ""; continue; }
+      if(ch === "\n"){ row.push(cell); out.push(row); row = []; cell = ""; continue; }
+      cell += ch;
+    }
+    if(cell !== "" || row.length){ row.push(cell); out.push(row); }
+    return out;
+  }
+  function isBlankRow(r){ return !(r.p || "").trim() && !(r.e || "").replace(/^เวลา\d{1,2}[.:]\d{2}น\.\s*$/, "").trim(); }
+  function importRaw(raw, atIdx){
+    var cur = readRows(); if(!document.querySelector("#notesRows .nt-row")) cur = rows();
+    var seen = {}; cur.forEach(function(r){ seen[r.p + "|" + r.t + "|" + r.e] = 1; });
+    var add = [], skipped = 0, bad = 0;
+    tsv(raw).forEach(function(c0){
+      var c = c0.map(function(x){ return String(x).replace(/\s*\n\s*/g, " ").trim(); });
+      if(!c.some(Boolean)) return;
+      var ti = -1; for(var k = 0; k < Math.min(c.length, 4); k++){ if(/^\d{1,2}[:.]\d{2}(?::\d{2})?\s*(?:น\.?)?$/.test(c[k])){ ti = k; break; } }
+      if(ti < 0 || c.length < 2){ bad++; return; }
+      var m = /^(\d{1,2})[:.](\d{2})/.exec(c[ti]);
+      var t = (m[1].length < 2 ? "0" : "") + m[1] + ":" + m[2];
+      var p = ti > 0 ? c[0] : "", e = c.slice(ti + 1).filter(Boolean).join(" ").replace(/^[\s♦️]+/, "");
+      var key = p + "|" + t + "|" + e; if(seen[key]){ skipped++; return; }
+      seen[key] = 1; add.push({ p: p, t: t, e: e });
+    });
+    if(add.length){
+      if(atIdx != null && cur[atIdx] && isBlankRow(cur[atIdx])) cur.splice(atIdx, 1, ...add);
+      else { cur = cur.filter(function(r){ return !isBlankRow(r); }).concat(add); }
+      store(cur); var bxr = document.getElementById("notesRows"); if(bxr){ if(bxr.contains(document.activeElement)) document.activeElement.blur(); bxr.innerHTML = ""; bxr.removeAttribute("data-sig"); } renderRows();
+    }
+    return { added: add.length, skipped: skipped, bad: bad };
+  }
+  function importMsg(r){
+    status((th() ? "เพิ่ม " + r.added + " แถว" : "Added " + r.added) + (r.skipped ? (th() ? " · ข้ามแถวซ้ำ " + r.skipped : " · skipped " + r.skipped + " duplicates") : "") + (r.bad ? (th() ? " · ข้าม " + r.bad + " แถวที่ไม่มีเวลา" : " · skipped " + r.bad + " without a time") : ""));
+  }
+  document.addEventListener("paste", function(e){
+    var el = e.target; if(!el || !el.closest || !el.closest("#notesRows")) return;
+    var raw = (e.clipboardData || window.clipboardData).getData("text"); if(!raw) return;
+    var lines = raw.replace(/\r/g, "").replace(/\n+$/, "").split("\n");
+    if(lines.length < 2 && raw.indexOf("\t") < 0) return;
+    e.preventDefault();
+    var rowEl = el.closest(".nt-row"), idx = rowEl ? +rowEl.getAttribute("data-i") : null;
+    var res = importRaw(raw, idx);
+    if(!res.added && !res.skipped){ var s0 = el.selectionStart || 0, v0 = el.value; el.value = v0.slice(0, s0) + raw.replace(/\s*\n\s*/g, " ") + v0.slice(el.selectionEnd || s0); el.dispatchEvent(new Event("input", { bubbles: true })); return; }
+    importMsg(res);
+  });
   function pad(n){ return (n < 10 ? "0" : "") + n; }
   function addRow(){
     var d = new Date(), hm = pad(d.getHours()) + ":" + pad(d.getMinutes());
@@ -1877,22 +1920,9 @@ html.qlock #qlock{display:flex}
     if(b && b.id === "notesImportCancel"){ var bx1 = document.getElementById("notesImportBox"); if(bx1) bx1.hidden = true; return; }
     if(b && b.id === "notesImportGo"){
       var raw = (document.getElementById("notesImport") || {}).value || "";
-      var cur = readRows(); if(!document.querySelector("#notesRows .nt-row")) cur = rows();
-      var seen = {}; cur.forEach(function(r){ seen[r.p + "|" + r.t + "|" + r.e] = 1; });
-      var added = 0, skipped = 0;
-      raw.split(/\r?\n/).forEach(function(line){
-        var c = line.split("\t").map(function(x){ return x.trim(); }); if(c.length < 3) return;
-        var p = c[0], t = c.length >= 4 ? c[2] : c[1], e = (c.length >= 4 ? c.slice(3) : c.slice(2)).join(" ");
-        var m = /^(\d{1,2})[:.](\d{2})/.exec(t); if(!m) return;
-        t = (m[1].length < 2 ? "0" : "") + m[1] + ":" + m[2];
-        e = e.replace(/^[\s♦️]+/, "");
-        var k = p + "|" + t + "|" + e; if(seen[k]){ skipped++; return; }
-        seen[k] = 1; cur.push({ p: p, t: t, e: e }); added++;
-      });
-      store(cur); var bxr = document.getElementById("notesRows"); if(bxr) bxr.innerHTML = ""; renderRows();
+      var res = importRaw(raw, null);
       var bx2 = document.getElementById("notesImportBox"); if(bx2) bx2.hidden = true; document.getElementById("notesImport").value = "";
-      status((th() ? "เพิ่ม " + added + " แถว" : "Added " + added) + (skipped ? (th() ? " ข้ามแถวซ้ำ " + skipped : ", skipped " + skipped + " duplicates") : ""));
-      return;
+      importMsg(res); return;
     }
     if(b && b.id === "notesAdd"){ addRow(); return; }
     if(b && b.classList.contains("nt-copy")){ var r = b.closest(".nt-row"); copyText([r.querySelector(".nt-p").value, r.querySelector(".nt-t").value, r.querySelector(".nt-e").value].join("\t"), th() ? "คัดลอก 3 ช่องแล้ว วางใน Excel ได้เลย" : "Copied 3 cells"); return; }
@@ -2320,112 +2350,70 @@ html.qlock #qlock{display:flex}
   apply(); build();
 })();
 
-/* ---- Live case drawer: type during a call, saved in this browser ---- */
+/* ---- Live case drawer: one plain text box per call, saved in this browser ---- */
 (function(){
   "use strict";
-  var KEY = "sc_live_v1", PKEY = "sc_live_proj_v1", MAX = 10;
+  var KEY = "sc_live_v1", MAX = 10;
   function en(){ var b = document.querySelector(".lang-opt.active"); return !!(b && b.getAttribute("data-lang") === "en"); }
   function T(th, e){ return en() ? e : th; }
-  function load(){ try{ var d = JSON.parse(localStorage.getItem(KEY) || "null"); if(d && Array.isArray(d.tabs)) return d; }catch(e){} return { tabs: [], act: null }; }
-  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
-  function projList(){ try{ var a = JSON.parse(localStorage.getItem(PKEY) || "[]"); return Array.isArray(a) ? a : []; }catch(e){ return []; } }
-  function rememberProj(p){ p = (p || "").trim(); if(!p) return; var a = projList().filter(function(x){ return x !== p; }); a.unshift(p); try{ localStorage.setItem(PKEY, JSON.stringify(a.slice(0, 40))); }catch(e){} }
-  var S = load();
-  var F = ["o1","o2","o3","o4","c1","c2"];
   function hm(ms){ var d = new Date(ms); return ("0" + d.getHours()).slice(-2) + "." + ("0" + d.getMinutes()).slice(-2); }
-  function blank(){ return { id: "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), p: "", sev: "", o1: "", o2: "", o3: "", o4: "", c1: "", c2: "", t: Date.now(), u: 0, src: 0 }; }
-  function isEmpty(t){ return !t.p && !t.sev && F.every(function(k){ return !t[k]; }); }
+  function line(lb, v){ return v && String(v).trim() ? lb + " : " + String(v).trim() : ""; }
+  function fromOld(t){
+    if(typeof t.x === "string") return t.x;
+    var g = line("🛠แนวทางที่จะแก้ไข", t.o3); if(t.o4 && t.o4.trim()) g = g ? g + "\n" + t.o4.trim() : t.o4.trim();
+    return [line("🚧ลักษณะเหตุ", t.o1), line("🔥ผลกระทบ", t.o2), g, line("✅ผลการแก้ไข", t.c1), line("🔑สาเหตุเบื้องต้น", t.c2)].filter(Boolean).join("\n\n");
+  }
+  function load(){
+    try{ var d = JSON.parse(localStorage.getItem(KEY) || "null");
+      if(d && Array.isArray(d.tabs)){ d.tabs = d.tabs.map(function(t){ return { id: t.id, x: fromOld(t), t: t.t || Date.now(), u: t.u || 0, src: t.src || 0 }; }); return d; } }catch(e){}
+    return { tabs: [], act: null };
+  }
+  var S = load();
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+  function blank(){ return { id: "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), x: "", t: Date.now(), u: 0, src: 0 }; }
+  function isEmpty(t){ return !t.x || !t.x.trim(); }
   function cur(){ for(var i = 0; i < S.tabs.length; i++){ if(S.tabs[i].id === S.act) return S.tabs[i]; } return null; }
   function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+  var TIME_RE = /เวลา\s*\d{1,2}[.:]\d{2}\s*(?:น\.?)?/;
+  function nowStamp(){ return "เวลา" + hm(Date.now()) + "น."; }
 
-  /* ---- Parsing a case into fields ---- */
-  var PIC = "(?:[\\u2600-\\u27BF\\uD83C-\\uDBFF\\uDC00-\\uDFFF\\uFE0F\\u200D]+\\s*)?";
-  function parts(text, labels){
-    text = text || ""; var hits = [];
-    labels.forEach(function(lb, i){
-      var m = new RegExp("[ \\t\"]*" + PIC + lb + "\\s*[:：]\\s*").exec(text);
-      if(m) hits.push({ i: i, s: m.index, e: m.index + m[0].length });
-    });
-    hits.sort(function(a, b){ return a.s - b.s; });
-    var out = labels.map(function(){ return ""; });
-    if(!hits.length){ out[0] = clean(text); return out; }
-    hits.forEach(function(h, j){ out[h.i] = clean(text.slice(h.e, j + 1 < hits.length ? hits[j + 1].s : text.length)); });
-    return out;
-  }
-  function clean(s){ return String(s || "").split("\n").map(function(l){ return l.trim(); }).filter(Boolean).join("\n").trim(); }
-  function stampTime(s){
-    var now = "เวลา" + hm(Date.now()) + "น.";
-    var re = /^\s*เวลา\s*\d{1,2}[.:]\d{2}\s*(?:น\.?)?\s*/;
-    return re.test(s || "") ? (s || "").replace(re, now + " ") : (now + " " + (s || "")).trim() + (s ? "" : " ");
-  }
-
-  /* ---- Output text ---- */
-  function line(lb, v){ return v && v.trim() ? lb + " : " + v.trim() : ""; }
-  function detailText(t){
-    var a = [line("🚧ลักษณะเหตุ", t.o1), line("🔥ผลกระทบ", t.o2)];
-    var g = line("🛠แนวทางที่จะแก้ไข", t.o3);
-    if(t.o4 && t.o4.trim()) g = g ? g + "\n" + t.o4.trim() : t.o4.trim();
-    a.push(g);
-    return a.filter(Boolean).join("\n\n");
-  }
-  function fixText(t){ return [line("✅ผลการแก้ไข", t.c1), line("🔑สาเหตุเบื้องต้น", t.c2)].filter(Boolean).join("\n\n"); }
-  function allText(t){ return [detailText(t), fixText(t)].filter(Boolean).join("\n\n"); }
-
-  /* ---- Drawer ---- */
-  var D = null, saveT = 0;
+  var D = null, saveT = 0, BOX = null;
   function build(){
     if(D) return D;
     D = document.createElement("aside");
     D.className = "live-drawer"; D.id = "liveDrawer"; D.hidden = true;
-    D.setAttribute("aria-label", T("เคสระหว่างรับสาย", "Live case"));
+    D.setAttribute("aria-label", T("จดระหว่างรับสาย", "Live notes"));
     D.innerHTML =
       '<div class="lv-head"><div class="lv-tabs" id="lvTabs" role="tablist"></div><button type="button" class="lv-x" id="lvClose" aria-label="' + T("ปิด", "Close") + '"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>' +
-      '<div class="lv-body" id="lvBody">' +
-        '<div class="lv-top"><label class="lv-f lv-proj"><span class="lv-lb">' + T("โครงการ", "Site") + '</span><input id="lv_p" class="lv-in" data-k="p" list="lvProjList" autocomplete="off" placeholder="' + T("เช่น LP-RM9 AB", "e.g. LP-RM9 AB") + '"></label>' +
-        '<div class="lv-f"><span class="lv-lb" id="lvSevLb">' + T("ระดับ", "Level") + '</span><div class="lv-sev" role="group" aria-labelledby="lvSevLb">' +
-          '<button type="button" class="lv-sv r" data-sev="r" aria-pressed="false">' + T("แดง", "Red") + '</button><button type="button" class="lv-sv y" data-sev="y" aria-pressed="false">' + T("เหลือง", "Yellow") + '</button><button type="button" class="lv-sv g" data-sev="g" aria-pressed="false">' + T("เขียว", "Green") + '</button></div></div></div>' +
-        '<datalist id="lvProjList"></datalist>' +
-        '<div class="lv-sec">' + T("รายละเอียดของเหตุการณ์", "Incident details") + '</div>' +
-        fld("o1", "🚧", T("ลักษณะเหตุ", "What happened"), T("เวลา..น. ...", "Time and what happened"), true) +
-        fld("o2", "🔥", T("ผลกระทบ", "Impact"), "") +
-        fld("o3", "🛠", T("แนวทางที่จะแก้ไข", "Plan"), "") +
-        fld("o4", "", T("ผู้รับทราบ / เข้าสนับสนุน", "Informed / support"), T("คุณ... ผจก.ชุมชน รับทราบเหตุ", "Who was informed")) +
-        '<div class="lv-sec">' + T("แนวทางและผลดำเนินการแก้ไข", "Resolution") + '</div>' +
-        fld("c1", "✅", T("ผลการแก้ไข", "Result"), T("พิมพ์เมื่อแก้ไขเสร็จ", "Type when resolved")) +
-        fld("c2", "🔑", T("สาเหตุเบื้องต้น", "Initial cause"), "—") +
-      '</div>' +
-      '<div class="lv-foot"><div class="lv-status" id="lvStatus" aria-live="polite"></div>' +
-        '<button type="button" class="lv-btn" data-copy="d">' + T("คัดลอกรายละเอียด", "Copy details") + '</button>' +
-        '<button type="button" class="lv-btn" data-copy="c">' + T("คัดลอกผลแก้ไข", "Copy resolution") + '</button>' +
-        '<button type="button" class="lv-btn primary" data-copy="a">' + T("คัดลอกทั้งหมด", "Copy all") + '</button></div>';
+      '<div class="lv-body"><div class="lv-bar"><span class="lv-hint" id="lvHint"></span><button type="button" class="lv-now" id="lvNow">+ ' + T("ใส่เวลาตอนนี้", "Insert time now") + '</button></div>' +
+      '<textarea id="lvBox" class="lv-box" spellcheck="false" aria-label="' + T("ข้อความเคส", "Case text") + '" placeholder="' + T("พิมพ์ได้เลย หรือกด “ใช้แม่แบบ” ที่การ์ดเคสเพื่อดึงข้อความมาแก้", "Start typing, or press “Use template” on a case") + '"></textarea></div>' +
+      '<div class="lv-foot"><div class="lv-status" id="lvStatus" aria-live="polite"></div><button type="button" class="lv-btn ghost" id="lvClear">' + T("ล้างข้อความ", "Clear") + '</button><button type="button" class="lv-btn primary" id="lvCopy">' + T("คัดลอกทั้งหมด", "Copy all") + '</button></div>';
     document.body.appendChild(D);
-    D.addEventListener("input", onInput);
+    BOX = D.querySelector("#lvBox");
+    BOX.addEventListener("input", function(){ var t = cur(); if(!t) return; t.x = BOX.value; touch(); var b = D.querySelector(".lv-tab.on .lv-tab-b"); if(b) b.lastChild.textContent = tabLabel(t); });
     D.addEventListener("click", onClick);
     D.addEventListener("keydown", function(e){ if(e.key === "Escape"){ e.stopPropagation(); close(); } });
     return D;
   }
-  function fld(k, ic, lb, ph, now){
-    return '<div class="lv-f"><div class="lv-lrow"><label class="lv-lb" for="lv_' + k + '">' + (ic ? '<span class="lv-ic" aria-hidden="true">' + ic + '</span>' : "") + lb + '</label>' +
-      (now ? '<button type="button" class="lv-now" id="lvNow">+ ' + T("ใส่เวลาตอนนี้", "Insert time now") + '</button>' : "") + '</div>' +
-      '<textarea id="lv_' + k + '" class="lv-in lv-ta" data-k="' + k + '" rows="1" placeholder="' + esc(ph) + '"></textarea></div>';
+  function tabLabel(t){
+    var first = (t.x || "").replace(/^[\s\S]*?ลักษณะเหตุ\s*[:：]\s*/, "").replace(TIME_RE, "").trim().split("\n")[0].trim();
+    if(first.length > 16) first = first.slice(0, 16) + "…";
+    return hm(t.t) + " · " + (first || T("สายใหม่", "New call"));
   }
-  function grow(el){ if(el.tagName !== "TEXTAREA") return; el.style.height = "auto"; el.style.height = (el.scrollHeight + 2) + "px"; }
-  function tabLabel(t){ return (t.p.trim() || T("เคสใหม่", "New case")) + " · " + hm(t.t); }
   function renderTabs(){
     var box = document.getElementById("lvTabs"); if(!box) return;
     box.innerHTML = S.tabs.map(function(t){
       var on = t.id === S.act;
-      return '<div class="lv-tab' + (on ? " on" : "") + '"><button type="button" class="lv-tab-b" role="tab" aria-selected="' + on + '" data-tab="' + t.id + '"><span class="lv-dot ' + (t.sev || "n") + '" aria-hidden="true"></span>' + esc(tabLabel(t)) + '</button>' +
+      return '<div class="lv-tab' + (on ? " on" : "") + '"><button type="button" class="lv-tab-b" role="tab" aria-selected="' + on + '" data-tab="' + t.id + '">' + esc(tabLabel(t)) + '</button>' +
         (on ? '<button type="button" class="lv-tab-del" data-del="' + t.id + '" aria-label="' + T("ลบแท็บนี้", "Delete this tab") + '">×</button>' : "") + '</div>';
     }).join("") + (S.tabs.length < MAX ? '<button type="button" class="lv-add" id="lvAdd" aria-label="' + T("เพิ่มสายใหม่", "Add a call") + '">+</button>' : "");
+    var on = box.querySelector(".lv-tab.on"); if(on && on.scrollIntoView) on.scrollIntoView({ block: "nearest", inline: "nearest" });
   }
   function fill(){
-    var t = cur(); if(!t) return;
-    var p = document.getElementById("lv_p"); if(p) p.value = t.p;
-    F.forEach(function(k){ var el = document.getElementById("lv_" + k); if(el){ el.value = t[k] || ""; grow(el); } });
-    D.querySelectorAll(".lv-sv").forEach(function(b){ var on = b.getAttribute("data-sev") === t.sev; b.classList.toggle("on", on); b.setAttribute("aria-pressed", on); });
-    var dl = document.getElementById("lvProjList"); if(dl) dl.innerHTML = projList().map(function(x){ return '<option value="' + esc(x) + '"></option>'; }).join("");
+    var t = cur(); if(!t || !BOX) return;
+    BOX.value = t.x || "";
     status(t.u ? T("บันทึกแล้ว ", "Saved ") + hm(t.u) : "");
+    var h = document.getElementById("lvHint"); if(h) h.textContent = t.src ? T("แม่แบบจากเคส #", "Template from case #") + t.src : T("บันทึกอัตโนมัติ", "Saves as you type");
     markSrc();
   }
   function status(s){ var el = document.getElementById("lvStatus"); if(el) el.innerHTML = s ? '<span class="lv-ok" aria-hidden="true">●</span> ' + esc(s) : ""; }
@@ -2435,66 +2423,80 @@ html.qlock #qlock{display:flex}
     if(t && t.src && D && !D.hidden){ var c = document.querySelector('.case-card[data-no="' + t.src + '"]'); if(c) c.classList.add("tpl-src"); }
   }
   function touch(){ var t = cur(); if(!t) return; t.u = Date.now(); clearTimeout(saveT); saveT = setTimeout(function(){ save(); status(T("บันทึกแล้ว ", "Saved ") + hm(t.u)); }, 250); }
-  function onInput(e){
-    var el = e.target, k = el.getAttribute && el.getAttribute("data-k"), t = cur(); if(!k || !t) return;
-    t[k] = el.value; grow(el); touch();
-    if(k === "p"){ var b = D.querySelector('.lv-tab.on .lv-tab-b'); if(b) b.lastChild.textContent = tabLabel(t); }
-  }
-  var delArm = null, delT = 0;
+  function focusBox(at){ if(!BOX) return; BOX.focus(); var p = (at == null) ? BOX.value.length : at; try{ BOX.setSelectionRange(p, p); }catch(e){} }
+  var delArm = null, delT = 0, clrArm = false, clrT = 0;
   function onClick(e){
     var b = e.target.closest("button"); if(!b) return;
     var t = cur();
     if(b.id === "lvClose"){ close(); return; }
     if(b.id === "lvAdd"){ newTab(); return; }
-    if(b.hasAttribute("data-tab")){ S.act = b.getAttribute("data-tab"); save(); renderTabs(); fill(); return; }
+    if(b.hasAttribute("data-tab")){ S.act = b.getAttribute("data-tab"); save(); renderTabs(); fill(); focusBox(); return; }
     if(b.hasAttribute("data-del")){
       var id = b.getAttribute("data-del"), tt = S.tabs.filter(function(x){ return x.id === id; })[0];
       if(tt && !isEmpty(tt) && delArm !== id){ delArm = id; b.textContent = T("ลบ?", "Delete?"); b.classList.add("arm"); clearTimeout(delT); delT = setTimeout(function(){ delArm = null; renderTabs(); }, 3000); return; }
       delArm = null; var i = S.tabs.indexOf(tt); S.tabs.splice(i, 1);
       if(!S.tabs.length) S.tabs.push(blank());
-      S.act = S.tabs[Math.max(0, i - 1)].id; save(); renderTabs(); fill(); return;
+      S.act = S.tabs[Math.max(0, i - 1)].id; save(); renderTabs(); fill(); focusBox(); return;
     }
-    if(b.hasAttribute("data-sev") && t){ var v = b.getAttribute("data-sev"); t.sev = t.sev === v ? "" : v; touch(); fill(); renderTabs(); return; }
-    if(b.id === "lvNow" && t){ var o = document.getElementById("lv_o1"); t.o1 = stampTime(t.o1); o.value = t.o1; grow(o); touch(); o.focus(); o.setSelectionRange(o.value.length, o.value.length); return; }
-    if(b.hasAttribute("data-copy") && t){
-      var k = b.getAttribute("data-copy"), txt = k === "d" ? detailText(t) : k === "c" ? fixText(t) : allText(t);
+    if(b.id === "lvNow" && t){
+      var s = BOX.selectionStart, en2 = BOX.selectionEnd, v = BOX.value, ins = nowStamp() + " ";
+      BOX.value = v.slice(0, s) + ins + v.slice(en2); t.x = BOX.value; touch(); renderTabs(); focusBox(s + ins.length); return;
+    }
+    if(b.id === "lvClear" && t){
+      if(isEmpty(t)) return;
+      if(!clrArm){ clrArm = true; b.textContent = T("ยืนยันล้าง?", "Confirm clear?"); b.classList.add("arm"); clearTimeout(clrT); clrT = setTimeout(function(){ clrArm = false; b.textContent = T("ล้างข้อความ", "Clear"); b.classList.remove("arm"); }, 3000); return; }
+      clrArm = false; b.textContent = T("ล้างข้อความ", "Clear"); b.classList.remove("arm");
+      t.x = ""; t.src = 0; touch(); fill(); renderTabs(); focusBox(); return;
+    }
+    if(b.id === "lvCopy" && t){
+      var txt = (t.x || "").trim();
       if(!txt){ msg(T("ยังไม่มีข้อความให้คัดลอก", "Nothing to copy yet"), "error"); return; }
-      rememberProj(t.p);
       var p = window.scCopy ? window.scCopy(txt) : (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject());
-      Promise.resolve(p).then(function(){ msg(k === "d" ? T("คัดลอกรายละเอียดแล้ว", "Details copied") : k === "c" ? T("คัดลอกผลแก้ไขแล้ว", "Resolution copied") : T("คัดลอกทั้งหมดแล้ว", "All copied"), "success"); }, function(){ msg(T("คัดลอกไม่สำเร็จ", "Copy failed"), "error"); });
+      Promise.resolve(p).then(function(){ msg(T("คัดลอกแล้ว", "Copied"), "success"); }, function(){ msg(T("คัดลอกไม่สำเร็จ", "Copy failed"), "error"); });
     }
   }
   function msg(s, k){ if(window.scToast) window.scToast(s, k); }
   function setW(){ document.body.classList.toggle("live-open", !!(D && !D.hidden)); var b = document.getElementById("liveNewBtn"); if(b) b.setAttribute("aria-expanded", !!(D && !D.hidden)); }
-  function open(focusKey){
+  function open(){
     build();
-    if(!S.tabs.length){ S.tabs.push(blank()); }
+    if(!S.tabs.length) S.tabs.push(blank());
     if(!cur()) S.act = S.tabs[S.tabs.length - 1].id;
-    D.hidden = false; setW(); renderTabs(); fill(); save();
-    var t = cur(), el = document.getElementById("lv_" + (focusKey || (t && t.p ? "o1" : "p")));
-    if(el){ el.focus(); try{ el.setSelectionRange(el.value.length, el.value.length); }catch(e){} }
+    D.hidden = false; setW(); renderTabs(); fill(); save(); focusBox();
   }
-  function close(){ if(!D) return; var t = cur(); if(t) rememberProj(t.p); save(); D.hidden = true; setW(); markSrc(); var b = document.getElementById("liveNewBtn"); if(b) b.focus(); }
+  function close(){ if(!D) return; save(); D.hidden = true; setW(); markSrc(); var b = document.getElementById("liveNewBtn"); if(b) b.focus(); }
+  function full(){ msg(T("เปิดได้สูงสุด " + MAX + " สาย ลบแท็บเก่าก่อน", "Up to " + MAX + " calls, delete an old tab first"), "error"); }
   function newTab(){
     build();
     var t = cur();
-    if(!(t && isEmpty(t) && !D.hidden)){
-      if(S.tabs.length >= MAX){ var e = S.tabs.filter(isEmpty)[0]; if(e){ S.act = e.id; } else { msg(T("เปิดได้สูงสุด " + MAX + " สาย ลบแท็บเก่าก่อน", "Up to " + MAX + " calls, delete an old tab first"), "error"); open(); return; } }
+    if(!(t && isEmpty(t))){
+      var e = S.tabs.filter(isEmpty)[0];
+      if(e) S.act = e.id;
+      else if(S.tabs.length >= MAX){ full(); open(); return; }
       else { var n = blank(); S.tabs.push(n); S.act = n.id; }
     }
-    open("p");
+    cur().t = isEmpty(cur()) ? Date.now() : cur().t;
+    open();
   }
   function useTemplate(no){
     var c = window.scCase ? window.scCase(no) : null; if(!c) return;
     build();
     var t = cur();
-    if(!t || !F.every(function(k){ return !t[k]; })){
-      if(S.tabs.length >= MAX){ msg(T("เปิดได้สูงสุด " + MAX + " สาย ลบแท็บเก่าก่อน", "Up to " + MAX + " calls, delete an old tab first"), "error"); open(); return; }
-      t = blank(); S.tabs.push(t); S.act = t.id;
+    if(!t || !isEmpty(t)){
+      var e = S.tabs.filter(isEmpty)[0];
+      if(e) t = e;
+      else if(S.tabs.length >= MAX){ full(); open(); return; }
+      else { t = blank(); S.tabs.push(t); }
+      S.act = t.id;
     }
-    var o = parts(c.opening, ["ลักษณะเหตุ", "ผลกระทบ", "แนวทางที่จะแก้ไข"]);
-    t.o1 = stampTime(o[0]); t.o2 = o[1]; t.o3 = o[2]; t.sev = c.sev || t.sev; t.src = no; t.u = Date.now();
-    save(); open("o1"); msg(T("ใส่ข้อความจากเคส #" + no + " แล้ว แก้ต่อได้เลย", "Filled from case #" + no), "success");
+    var body = String(c.opening || "").split("\n").map(function(l){ return l.trim(); }).join("\n").replace(/\n{3,}/g, "\n\n").trim();
+    if(TIME_RE.test(body)) body = body.replace(TIME_RE, nowStamp());
+    else if(/ลักษณะเหตุ\s*[:：]\s*/.test(body)) body = body.replace(/(ลักษณะเหตุ\s*[:：]\s*)/, "$1" + nowStamp() + " ");
+    else body = nowStamp() + " " + body;
+    t.x = body + "\n\n✅ผลการแก้ไข : \n\n🔑สาเหตุเบื้องต้น : ";
+    t.t = Date.now(); t.src = no; t.u = Date.now();
+    save(); open();
+    var m = TIME_RE.exec(BOX.value); focusBox(m ? m.index + m[0].length : 0);
+    msg(T("ใส่แม่แบบจากเคส #" + no + " แล้ว แก้ต่อได้เลย", "Template from case #" + no), "success");
   }
 
   document.addEventListener("click", function(e){
