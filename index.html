@@ -923,6 +923,15 @@
 .lv-tab-b{ max-width:220px; overflow:hidden; text-overflow:ellipsis; }
 
 
+  .nt-search{ flex:none; display:flex; align-items:center; gap:8px; background:var(--surface-2); border:1px solid var(--border); border-radius:10px; padding:0 6px 0 12px; margin-bottom:8px; min-height:40px; color:var(--text-3); transition:border-color .15s, box-shadow .15s; }
+  .nt-search:focus-within{ border-color:var(--accent); box-shadow:0 0 0 3px var(--ring); background:var(--surface); }
+  .nt-search input{ flex:1; min-width:0; font:inherit; font-size:13.5px; color:var(--text-1); background:none; border:0; outline:none; padding:8px 0; }
+  .nt-search input::-webkit-search-cancel-button{ display:none; }
+  .nt-search-n{ flex:none; font-size:12px; color:var(--text-3); white-space:nowrap; }
+  .nt-search-x{ flex:none; font:inherit; font-size:16px; line-height:1; color:var(--text-3); background:none; border:0; border-radius:6px; width:28px; height:28px; cursor:pointer; }
+  .nt-search-x:hover{ color:var(--text-1); background:var(--header-bg); }
+  .nt-row.nt-hide{ display:none !important; }
+
 </style>
 </head>
 <body>
@@ -1250,6 +1259,7 @@ html.qlock #qlock{display:flex}
                   <textarea id="notesImport" class="rf-in nt-import-in" rows="6" placeholder="LV-SW-RM2&#9;08:05&#9;เวลา08.05น. ..."></textarea>
                   <div class="notes-actions"><span class="nt-spacer"></span><button type="button" class="pref-btn" id="notesImportCancel">${LANG==="en" ? "Cancel" : "ยกเลิก"}</button><button type="button" class="pref-btn primary" id="notesImportGo">${LANG==="en" ? "Add to table" : "เพิ่มลงตาราง"}</button></div>
                 </div>
+              <div class="nt-search"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="notesSearch" type="search" autocomplete="off" placeholder="${LANG==="en" ? "Search notes: site, time, event" : "ค้นหาในโน้ต: โครงการ เวลา เหตุการณ์"}" aria-label="${LANG==="en" ? "Search notes" : "ค้นหาในโน้ต"}"><span class="nt-search-n" id="notesSearchN" aria-live="polite"></span><button type="button" class="nt-search-x" id="notesSearchX" aria-label="${LANG==="en" ? "Clear search" : "ล้างคำค้น"}" hidden>×</button></div>
               <div class="nt-head"><span>${LANG==="en" ? "Site" : "โครงการ"}</span><span>${LANG==="en" ? "Time" : "เวลา"}</span><span>${LANG==="en" ? "Event" : "เหตุการณ์"}</span><span></span></div>
               <div class="nt-body" id="notesRows"></div>
               <div class="notes-actions"><button type="button" class="pref-btn" id="notesAdd">+ ${LANG==="en" ? "Add row" : "เพิ่มแถว"}</button><button type="button" class="pref-btn" id="notesImportBtn">${LANG==="en" ? "Paste rows" : "วางข้อมูล"}</button><span class="nt-spacer"></span><button type="button" class="pref-btn" id="notesCopyAll">${LANG==="en" ? "Copy all" : "คัดลอกทั้งหมด"}</button><button type="button" class="pref-btn danger" id="notesClear">${LANG==="en" ? "Clear all" : "ล้างทั้งหมด"}</button></div>
@@ -1927,7 +1937,7 @@ html.qlock #qlock{display:flex}
     if(b && b.id === "notesAdd"){ addRow(); return; }
     if(b && b.classList.contains("nt-copy")){ var r = b.closest(".nt-row"); copyText([r.querySelector(".nt-p").value, r.querySelector(".nt-t").value, r.querySelector(".nt-e").value].join("\t"), th() ? "คัดลอก 3 ช่องแล้ว วางใน Excel ได้เลย" : "Copied 3 cells"); return; }
     if(b && b.classList.contains("nt-del")){ var r2 = b.closest(".nt-row"); r2.remove(); store(readRows()); var box = document.getElementById("notesRows"); if(box && !box.querySelector(".nt-row")) renderRows(); status(th() ? "ลบแล้ว" : "Deleted"); return; }
-    if(b && b.id === "notesCopyAll"){ var all = readRows().filter(function(r){ return r.p || r.t || r.e; }).map(function(r){ return [r.p, r.t, r.e].filter(Boolean).join("\t"); }).join("\n"); copyText(all, th() ? "คัดลอกทั้งหมดแล้ว" : "All copied"); return; }
+    if(b && b.id === "notesCopyAll"){ var all = readRows().filter(function(r, i){ var el = document.querySelectorAll("#notesRows .nt-row")[i]; return !(el && el.classList.contains("nt-hide")); }).filter(function(r){ return r.p || r.t || r.e; }).map(function(r){ return [r.p, r.t, r.e].filter(Boolean).join("\t"); }).join("\n"); copyText(all, th() ? "คัดลอกทั้งหมดแล้ว" : "All copied"); return; }
     if(b && b.id === "notesClear"){
       if(!armed){ armed = true; b.textContent = th() ? "กดอีกครั้งเพื่อล้าง" : "Click again to clear"; setTimeout(function(){ armed = false; b.textContent = th() ? "ล้างทั้งหมด" : "Clear all"; }, 2500); return; }
       armed = false; store([]); set("sc_notes_v1", ""); var bx = document.getElementById("notesRows"); if(bx) bx.innerHTML = ""; renderRows(); b.textContent = th() ? "ล้างทั้งหมด" : "Clear all"; status(th() ? "ล้างแล้ว" : "Cleared");
@@ -2512,6 +2522,31 @@ html.qlock #qlock{display:flex}
       e.preventDefault(); newTab();
     }
   });
+})();
+
+/* ---- Notes search ---- */
+(function(){
+  function th(){ var b = document.querySelector(".lang-opt.active"); return !(b && b.getAttribute("data-lang") === "en"); }
+  function apply(){
+    var inp = document.getElementById("notesSearch"), box = document.getElementById("notesRows"); if(!inp || !box) return;
+    var q = inp.value.trim().toLowerCase(), x = document.getElementById("notesSearchX"), n = document.getElementById("notesSearchN");
+    if(x) x.hidden = !q;
+    var groups = q ? q.split("|").map(function(g){ return g.trim().split(/\s+/).filter(Boolean); }).filter(function(g){ return g.length; }) : [];
+    var shown = 0, total = 0;
+    box.querySelectorAll(".nt-row").forEach(function(r){
+      total++;
+      var v = [".nt-p", ".nt-t", ".nt-e"].map(function(s){ var el = r.querySelector(s); return el ? el.value : ""; }).join(" ").toLowerCase();
+      v += " " + v.replace(/(\d):(\d)/g, "$1.$2");
+      var ok = !groups.length || r.contains(document.activeElement) || groups.some(function(g){ return g.every(function(w){ return v.indexOf(w.replace(/(\d):(\d)/g, "$1.$2")) >= 0 || v.indexOf(w) >= 0; }); });
+      r.classList.toggle("nt-hide", !ok); if(ok) shown++;
+    });
+    if(n) n.textContent = groups.length ? (th() ? "พบ " + shown + "/" + total : shown + "/" + total) : "";
+  }
+  document.addEventListener("input", function(e){ if(e.target && e.target.id === "notesSearch") apply(); });
+  document.addEventListener("keydown", function(e){ if(e.target && e.target.id === "notesSearch" && e.key === "Escape" && e.target.value){ e.preventDefault(); e.stopPropagation(); e.target.value = ""; apply(); } }, true);
+  document.addEventListener("click", function(e){ var b = e.target.closest && e.target.closest("#notesSearchX"); if(!b) return; var i = document.getElementById("notesSearch"); i.value = ""; apply(); i.focus(); });
+  function watch(){ var box = document.getElementById("notesRows"); if(!box){ setTimeout(watch, 400); return; } new MutationObserver(function(){ var i = document.getElementById("notesSearch"); if(i && i.value.trim()) apply(); }).observe(box, { childList: true }); }
+  watch();
 })();
 </script>
 </body>
